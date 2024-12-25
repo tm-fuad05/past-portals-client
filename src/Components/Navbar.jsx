@@ -59,7 +59,7 @@ const Navbar = () => {
 
   return (
     <div className="shadow-sm">
-      <nav className="flex items-center justify-between w-11/12 mx-auto relative py-2 ">
+      <nav className="flex items-center justify-between w-11/12 mx-auto relative py-2 md:py-4 ">
         <h2 className="text-2xl font-bold font-aldrich">
           <span className="text-red-600">P</span>asts
           <span className="text-red-600">P</span>ortals
@@ -82,7 +82,7 @@ const Navbar = () => {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+                  className="dropdown-content menu bg-base-100 rounded-box z-20 w-52 p-2 shadow"
                 >
                   <li className="pt-2 pl-2 font-medium">{user?.displayName}</li>
                   <li>
