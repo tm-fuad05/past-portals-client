@@ -66,8 +66,16 @@ const Register = () => {
       .then((result) => {
         console.log(result.user);
         setUser(result.user);
-
-        navigate("/");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "successfully Signed in",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1200);
       })
       .catch((error) => {
         setError(error);

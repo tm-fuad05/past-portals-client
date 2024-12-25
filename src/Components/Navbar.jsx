@@ -25,17 +25,17 @@ const Navbar = () => {
 
   const navMenu = (
     <>
-      <NavLink>
+      <NavLink to="/">
         <li className="px-3 py-2 hover:bg-gray-100 hover:rounded-md duration-300">
           Home
         </li>
       </NavLink>
-      <NavLink>
+      <NavLink to="/all-artifacts">
         <li className="px-3 py-2 hover:bg-gray-100 hover:rounded-md duration-300">
           All Artifacts
         </li>
       </NavLink>
-      <NavLink>
+      <NavLink to="add-artifacts">
         <li className="px-3 py-2 hover:bg-gray-100 hover:rounded-md duration-300">
           Add Artifacts
         </li>

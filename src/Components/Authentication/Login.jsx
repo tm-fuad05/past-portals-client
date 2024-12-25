@@ -14,13 +14,13 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 // Swal
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-import { toast } from "react-toastify";
 
 const Login = () => {
   const { signInUser, setUser, signInWithGoogle } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ const Login = () => {
           timer: 1000,
         });
         setTimeout(() => {
-          navigate("/");
+          navigate(location?.state ? location.state : "/");
         }, 1200);
       })
       .catch(() => setError("Invalid email or password"));
@@ -53,7 +53,16 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         setUser(result.user);
-        navigate("/");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "successfully Signed in",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        setTimeout(() => {
+          navigate(location?.state ? location.state : "/");
+        }, 1200);
       })
       .catch((error) => {
         setError(error);

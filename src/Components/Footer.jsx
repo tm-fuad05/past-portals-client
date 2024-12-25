@@ -103,10 +103,10 @@ const Footer = () => {
       </div>
 
       <div className="border-t border-gray-200 pt-[20px] mt-[40px] flex items-center justify-between w-full flex-wrap gap-[20px]">
-        <h2 className="text-2xl font-bold font-aldrich">
+        <a href="/" className="text-2xl font-bold font-aldrich">
           <span className="text-red-600">P</span>asts
           <span className="text-red-600">P</span>ortals
-        </h2>
+        </a>
 
         <p className="text-[0.9rem] text-gray-600">
           © 2024 PastPortals. All Rights Reserved.{" "}
