@@ -43,9 +43,9 @@ const FAQ = () => {
       <h3 className="text-2xl md:text-3xl font-bold mb-4">
         Additional Details
       </h3>
-      <div className="flex gap-3 flex-col rounded-lg p-5 bg-red-50">
+      <div className="flex gap-3 flex-col rounded-xl p-5 border ">
         {accordingData?.map((according, index) => (
-          <article key={index} className=" rounded py-3">
+          <article key={index} className=" rounded py-3 border-b">
             <div
               className="flex gap-2 cursor-pointer items-center justify-between w-full"
               onClick={() => handleClick(index)}

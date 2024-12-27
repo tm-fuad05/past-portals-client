@@ -4,8 +4,7 @@ import React, { useContext, useState } from "react";
 ("react-icons/io");
 import { TbLogout2 } from "react-icons/tb";
 import { CiMenuFries } from "react-icons/ci";
-import { FiUser } from "react-icons/fi";
-import { IoSettingsOutline } from "react-icons/io5";
+
 import { IoIosArrowUp } from "react-icons/io";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
@@ -35,7 +34,7 @@ const Navbar = () => {
           All Artifacts
         </li>
       </NavLink>
-      <NavLink to="add-artifacts">
+      <NavLink to="/add-artifacts">
         <li className="px-3 py-2 hover:bg-gray-100 hover:rounded-md duration-300">
           Add Artifacts
         </li>
@@ -60,10 +59,10 @@ const Navbar = () => {
   return (
     <div className="shadow-sm">
       <nav className="flex items-center justify-between w-11/12 mx-auto relative py-2 md:py-4 ">
-        <h2 className="text-2xl font-bold font-aldrich">
+        <a href="/" className="text-2xl font-bold font-aldrich">
           <span className="text-red-600">P</span>asts
           <span className="text-red-600">P</span>ortals
-        </h2>
+        </a>
         <ul className="items-center gap-[10px] text-[1rem] text-[#424242] lg:flex hidden">
           {navMenu}
         </ul>
@@ -100,7 +99,7 @@ const Navbar = () => {
               </div>
               {/* My profile */}
               <div
-                className="flex items-center gap-[10px] cursor-pointer relative"
+                className="flex items-center gap-[10px] cursor-pointer relative z-20"
                 onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               >
                 <h1 className="text-[1rem] font-[400] text-gray-600 sm:block hidden">

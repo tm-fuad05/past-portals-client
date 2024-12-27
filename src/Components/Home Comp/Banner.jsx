@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 // import required modules
-import { Navigation } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 
 import slider1 from "../../assets/slider1.jpg";
 import slider2 from "../../assets/slider2.jpg";
@@ -17,8 +17,13 @@ const Banner = () => {
   return (
     <div className="w-11/12 mx-auto mt-7">
       <Swiper
-        navigation={true}
-        modules={[Navigation]}
+        modules={[Autoplay]}
+        autoplay={{
+          delay: 3500,
+          disableOnInteraction: false,
+        }}
+        loop={true}
+        slidesPerView={1}
         className="mySwiper rounded-xl"
       >
         <SwiperSlide>
@@ -36,7 +41,9 @@ const Banner = () => {
             {/* Text Content */}
             <div className="absolute inset-0 flex flex-col justify-center items-start px-16 text-white gap-5">
               <div className="lg:w-3/4 md:w-3/4 text-4xl lg:text-6xl font-bold text-center md:text-left lg:text-left">
-                <h1>The World's Museum</h1>
+                <h1>
+                  The World's <span className="text-lightRed">Museum</span>
+                </h1>
               </div>
               <p className="lg:w-3/4 md:w-3/4 text-md text-center md:text-left lg:text-left font-light">
                 Explore a global collection of historical treasures. Discover
@@ -61,7 +68,9 @@ const Banner = () => {
             {/* Text Content */}
             <div className="absolute inset-0 flex flex-col justify-center items-start px-16 text-white gap-5">
               <div className="lg:w-3/4 md:w-3/4 text-4xl lg:text-6xl font-bold text-center md:text-left lg:text-left">
-                <h1>A Window to the Past</h1>
+                <h1>
+                  A Window to the <span className="text-lightRed">Past</span>
+                </h1>
               </div>
               <p className="lg:w-3/4 md:w-3/4 text-md text-center md:text-left lg:text-left font-light">
                 Journey through time with our vast collection of artifacts.
@@ -87,7 +96,9 @@ const Banner = () => {
             {/* Text Content */}
             <div className="absolute inset-0 flex flex-col justify-center items-start px-16 text-white gap-5">
               <div className="lg:w-3/4 md:w-3/4 text-4xl lg:text-6xl font-bold text-center md:text-left lg:text-left">
-                <h1>History in Your Hands</h1>
+                <h1>
+                  History in Your <span className="text-lightRed">Hands</span>
+                </h1>
               </div>
               <p className="lg:w-3/4 md:w-3/4 text-md text-center md:text-left lg:text-left font-light">
                 Explore, learn, and contribute to a dynamic history database.

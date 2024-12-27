@@ -4,10 +4,15 @@ import { Navigate, useLocation } from "react-router-dom";
 
 const PrivateLayout = ({ children }) => {
   const { user, loader } = useContext(AuthContext);
+
   const location = useLocation();
-  console.log(location);
+
   if (loader) {
-    <span className="loading loading-ring loading-lg"></span>;
+    return (
+      <div>
+        <span className="loading loading-ring loading-lg  min-h-screen flex items-center mx-auto"></span>
+      </div>
+    );
   }
 
   if (user) {

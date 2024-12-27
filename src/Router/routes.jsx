@@ -7,6 +7,8 @@ import Home from "../Pages/Home";
 import AllArtifacts from "../Pages/AllArtifacts";
 import AddArtifacts from "../Pages/AddArtifacts";
 import PrivateLayout from "../PrivateLayout/PrivateLayout";
+import ArtifactDetails from "../Pages/ArtifactDetails";
+import ErrorPage from "../Pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,16 @@ const router = createBrowserRouter([
       {
         path: "/all-artifacts",
         element: <AllArtifacts></AllArtifacts>,
+      },
+      {
+        path: "/artifact/:name/:id",
+        element: (
+          <PrivateLayout>
+            <ArtifactDetails></ArtifactDetails>
+          </PrivateLayout>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/each-artifact-details/${params.id}`),
       },
       {
         path: "/add-artifacts",
@@ -44,6 +56,10 @@ const router = createBrowserRouter([
         element: <Register></Register>,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage></ErrorPage>,
   },
 ]);
 

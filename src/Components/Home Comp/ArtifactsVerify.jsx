@@ -10,7 +10,9 @@ const ArtifactsVerify = () => {
           <button className="border border-black rounded-full px-2 py-[3px] text-[10px]">
             The Solution
           </button>
-          <h1 className="text-2xl md:text-3xl font-bold">Artifacts VERIFY</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">
+            Artifacts <span className="text-darkRed">VERIFY</span>
+          </h1>
           <p className="text-gray-600">
             A powerful combination of chemical analysis and artificial
             intelligence
