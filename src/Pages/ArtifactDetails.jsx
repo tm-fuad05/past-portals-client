@@ -1,19 +1,13 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 // Icons
 import { FaHeart } from "react-icons/fa";
+import axios from "axios";
 
 const ArtifactDetails = () => {
   const eachArtifactData = useLoaderData();
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  let favCount = 0;
-  if (isFavorite) {
-    favCount += 1;
-  } else {
-    favCount = 0;
-  }
 
   const {
     artifactImage,
@@ -25,8 +19,6 @@ const ArtifactDetails = () => {
     discoveredBy,
     presentLocation,
   } = eachArtifactData;
-
-  console.log(eachArtifactData);
 
   return (
     <section>
@@ -76,13 +68,7 @@ const ArtifactDetails = () => {
           <div className="bg-gray-50 p-4 border-t border-gray-200 text-center">
             <div className="flex items-center justify-between w-full p-4 ">
               <div className="flex items-center gap-3 ">
-                <FaHeart
-                  className={`${
-                    isFavorite ? "text-[#ff3d3d]" : "text-[#424242]"
-                  } text-[1.4rem] cursor-pointer`}
-                  onClick={() => setIsFavorite(!isFavorite)}
-                />
-                <span className="font-medium">{favCount}</span>
+                <FaHeart className="" />
               </div>
             </div>
           </div>
