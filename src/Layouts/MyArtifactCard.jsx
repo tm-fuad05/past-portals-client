@@ -25,6 +25,35 @@ const MyArtifactCard = ({
     presentLocation,
   } = myArtifact;
 
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`http://localhost:5000/artifacts/${id}`).then((res) => {
+          console.log(res.data);
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your Artifact has been deleted.",
+              icon: "success",
+            });
+            const filtered = myAddedArtifacts.filter(
+              (artifact) => artifact._id !== id
+            );
+            setMyAddedArtifacts(filtered);
+          }
+        });
+      }
+    });
+  };
+
   return (
     <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
       {/* Header Section with Image */}
