@@ -35,7 +35,7 @@ const ArtifactCard = ({ artifact }) => {
           to={`/artifact/${artifact.artifactName}/${artifact._id}`}
           className=" p-3 w-fit hover:bg-gray-100 cursor-pointer mr-2 mb-2 rounded-full group"
         >
-          <BsArrowRight className="text-[1.5rem] text-gray-400" />
+          <BsArrowRight className="text-[1.5rem] text-darkRed" />
         </NavLink>
       </div>
     </div>
