@@ -35,6 +35,8 @@ const AddArtifacts = () => {
       presentLocation,
       artifactAdderName,
       artifactAdderEmail,
+      isLiked: false,
+      likedCount: 0,
     };
 
     axios.post("http://localhost:5000/artifacts", artifactsData).then((res) => {

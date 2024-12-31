@@ -10,6 +10,7 @@ import PrivateLayout from "../PrivateLayout/PrivateLayout";
 import ArtifactDetails from "../Pages/ArtifactDetails";
 import ErrorPage from "../Pages/ErrorPage";
 import MyArtifacts from "../Pages/MyArtifacts";
+import MyLikedArtifacts from "../Pages/MyLikedArtifacts";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateLayout>
             <MyArtifacts></MyArtifacts>
+          </PrivateLayout>
+        ),
+      },
+      {
+        path: "/my-liked-artifacts",
+        element: (
+          <PrivateLayout>
+            <MyLikedArtifacts></MyLikedArtifacts>
           </PrivateLayout>
         ),
       },

@@ -49,13 +49,6 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, profileInfo);
   };
 
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  let favCount = 0;
-  if (isFavorite) {
-    favCount = 1;
-  }
-
   const authInfo = {
     user,
     setUser,
@@ -66,9 +59,6 @@ const AuthProvider = ({ children }) => {
     loader,
     setLoader,
     updateUsersProfileInfo,
-    isFavorite,
-    setIsFavorite,
-    favCount,
   };
   return (
     <div>

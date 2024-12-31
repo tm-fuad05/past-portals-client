@@ -119,9 +119,11 @@ const Navbar = () => {
                       My Artifacts
                     </p>
                   </NavLink>
-                  <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-100">
-                    Liked Artifacts
-                  </p>
+                  <NavLink to="/my-liked-artifacts">
+                    <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem] text-gray-600 hover:bg-gray-100">
+                      Liked Artifacts
+                    </p>
+                  </NavLink>
                 </div>
 
                 <IoIosArrowUp

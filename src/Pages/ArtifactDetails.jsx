@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 
 // Icons
 import { FaHeart } from "react-icons/fa";
 import axios from "axios";
+import useAuth from "../hooks/useAuth";
 
 const ArtifactDetails = () => {
+  const { user } = useAuth();
   const eachArtifactData = useLoaderData();
 
   const {
@@ -18,7 +19,22 @@ const ArtifactDetails = () => {
     discoveredAt,
     discoveredBy,
     presentLocation,
+    isLiked,
+    likedCount,
   } = eachArtifactData;
+
+  console.log(isLiked, likedCount);
+
+  const [isFavorite, setIsFavorite] = useState(isLiked);
+
+  const likedArtifact = { ...eachArtifactData, likedEmail: user.email };
+
+  const handleLike = () => {
+    setIsFavorite(true);
+    axios
+      .post("http://localhost:5000/likedArtifacts", likedArtifact)
+      .then((res) => console.log(res.data));
+  };
 
   return (
     <section>
@@ -68,7 +84,13 @@ const ArtifactDetails = () => {
           <div className="bg-gray-50 p-4 border-t border-gray-200 text-center">
             <div className="flex items-center justify-between w-full p-4 ">
               <div className="flex items-center gap-3 ">
-                <FaHeart className="" />
+                <FaHeart
+                  className={`${
+                    isFavorite ? "text-[#ff3d3d]" : "text-[#424242]"
+                  } text-[1.4rem] cursor-pointer`}
+                  onClick={() => handleLike()}
+                />
+                <span className="font-medium text-lg">{likedCount}</span>
               </div>
             </div>
           </div>
