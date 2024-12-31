@@ -72,11 +72,15 @@ const Navbar = () => {
             <div className="flex items-center gap-[15px]">
               <div className="dropdown dropdown-end dropdown-hover">
                 {/* Profile photo */}
-                <div tabIndex={0} role="button" className="hover:opacity-60">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="hover:bg-gray-200 hover:rounded-full"
+                >
                   <img
                     src={user?.photoURL}
                     alt="Profile"
-                    className="w-[35px] h-[35px] rounded-full object-cover"
+                    className="w-[40px] h-[40px] rounded-full object-cover p-1"
                   />
                 </div>
                 <ul
@@ -102,16 +106,14 @@ const Navbar = () => {
                 className="flex items-center gap-[10px] cursor-pointer relative z-20"
                 onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               >
-                <h1 className="text-[1rem] font-[400] text-gray-600 sm:block ">
+                <h1 className="text-[1rem] font-[400] text-gray-600 hidden md:block">
                   My Profile
                 </h1>
 
                 <div
                   className={`${
-                    accountMenuOpen
-                      ? "translate-y-0 opacity-100 z-[1]"
-                      : "translate-y-[10px] opacity-0 z-[-1]"
-                  } bg-white w-max rounded-md shadow-lg absolute top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}
+                    accountMenuOpen ? "t z-[1]" : "hidden"
+                  } bg-white w-max rounded-md shadow-lg absolute top-[45px] right-0 p-[10px] flex flex-col  gap-[5px] `}
                 >
                   <NavLink to="/my-artifacts">
                     {" "}
