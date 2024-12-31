@@ -102,7 +102,7 @@ const Navbar = () => {
                 className="flex items-center gap-[10px] cursor-pointer relative z-20"
                 onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               >
-                <h1 className="text-[1rem] font-[400] text-gray-600 sm:block hidden">
+                <h1 className="text-[1rem] font-[400] text-gray-600 sm:block ">
                   My Profile
                 </h1>
 
@@ -129,7 +129,7 @@ const Navbar = () => {
                 <IoIosArrowUp
                   className={`${
                     accountMenuOpen ? "rotate-0" : "rotate-[180deg]"
-                  } transition-all duration-300 text-gray-600 sm:block hidden`}
+                  } transition-all duration-300 text-gray-600 sm:block`}
                 />
               </div>
             </div>

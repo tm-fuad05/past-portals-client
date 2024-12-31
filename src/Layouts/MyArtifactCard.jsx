@@ -55,7 +55,7 @@ const MyArtifactCard = ({
   };
 
   return (
-    <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
       {/* Header Section with Image */}
       <div className="relative">
         <img
