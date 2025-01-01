@@ -9,9 +9,7 @@ const MyLikedArtifacts = () => {
   const [myLikedArtifacts, setMyLikedArtifacts] = useState([]);
   useEffect(() => {
     axios
-      .get(
-        `https://pastportals-server.vercel.app/my-liked-artifacts?email=${user.email}`
-      )
+      .get(`http://localhost:5000/my-liked-artifacts?email=${user.email}`)
       .then((res) => setMyLikedArtifacts(res.data));
   }, []);
 

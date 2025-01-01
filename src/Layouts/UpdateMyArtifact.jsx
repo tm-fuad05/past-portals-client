@@ -56,10 +56,7 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
     console.log(artifactsData);
 
     axios
-      .patch(
-        `https://pastportals-server.vercel.app/artifacts/${myArtifact._id}`,
-        artifactsData
-      )
+      .patch(`http://localhost:5000/artifacts/${myArtifact._id}`, artifactsData)
       .then((res) => {
         console.log(res.data);
         modalClose();

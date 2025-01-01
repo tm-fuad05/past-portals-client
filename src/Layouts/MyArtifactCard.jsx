@@ -3,7 +3,7 @@ import { BsArrowRight } from "react-icons/bs";
 // Icons
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+
 import UpdateMyArtifact from "./UpdateMyArtifact";
 import axios from "axios";
 import Swal from "sweetalert2/dist/sweetalert2.js";
@@ -36,22 +36,20 @@ const MyArtifactCard = ({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios
-          .delete(`https://pastportals-server.vercel.app/artifacts/${id}`)
-          .then((res) => {
-            console.log(res.data);
-            if (res.data.deletedCount > 0) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your Artifact has been deleted.",
-                icon: "success",
-              });
-              const filtered = myAddedArtifacts.filter(
-                (artifact) => artifact._id !== id
-              );
-              setMyAddedArtifacts(filtered);
-            }
-          });
+        axios.delete(`http://localhost:5000/artifacts/${id}`).then((res) => {
+          console.log(res.data);
+          if (res.data.deletedCount > 0) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your Artifact has been deleted.",
+              icon: "success",
+            });
+            const filtered = myAddedArtifacts.filter(
+              (artifact) => artifact._id !== id
+            );
+            setMyAddedArtifacts(filtered);
+          }
+        });
       }
     });
   };

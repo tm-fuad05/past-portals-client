@@ -33,9 +33,7 @@ const router = createBrowserRouter([
           </PrivateLayout>
         ),
         loader: ({ params }) =>
-          fetch(
-            `https://pastportals-server.vercel.app/each-artifact-details/${params.id}`
-          ),
+          fetch(`http://localhost:5000/each-artifact-details/${params.id}`),
       },
       {
         path: "/add-artifacts",

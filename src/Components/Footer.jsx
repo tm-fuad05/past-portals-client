@@ -109,7 +109,7 @@ const Footer = () => {
         </a>
 
         <p className="text-[0.9rem] text-gray-600">
-          © 2024 PastPortals. All Rights Reserved.{" "}
+          © 2024 PastPortals. All Rights Reserved.
         </p>
 
         <div className="flex items-center gap-[10px] text-text">

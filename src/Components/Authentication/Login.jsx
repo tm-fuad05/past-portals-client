@@ -51,7 +51,6 @@ const Login = () => {
   const handleSignInwithGoogle = () => {
     signInWithGoogle()
       .then((result) => {
-        console.log(result.user);
         setUser(result.user);
         Swal.fire({
           position: "center",

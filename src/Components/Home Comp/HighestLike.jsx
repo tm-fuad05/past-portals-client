@@ -7,13 +7,12 @@ const HighestLike = () => {
   useEffect(() => {
     const fetchHighestLike = async () => {
       const { data } = await axios.get(
-        "https://pastportals-server.vercel.app/highest-like-count"
+        "http://localhost:5000/highest-like-count"
       );
       setHighestLikedData(data);
     };
     fetchHighestLike();
   }, []);
-  console.log(highestLikedData);
 
   return (
     <div className="w-11/12 mx-auto">

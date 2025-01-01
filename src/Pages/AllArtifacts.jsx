@@ -12,7 +12,7 @@ const AllArtifacts = () => {
   useEffect(() => {
     const fetchaAllArtifacts = async () => {
       const { data } = await axios.get(
-        `https://pastportals-server.vercel.app/artifacts?search=${search}`
+        `http://localhost:5000/artifacts?search=${search}`
       );
       setAllArtifacts(data);
     };

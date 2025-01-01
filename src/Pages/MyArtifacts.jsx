@@ -11,7 +11,7 @@ const MyArtifacts = () => {
   useEffect(() => {
     const fetchMyAddedArtifacts = async () => {
       const { data } = await axios.get(
-        `https://pastportals-server.vercel.app/my-artifacts?email=${user.email}`
+        `http://localhost:5000/my-artifacts?email=${user.email}`
       );
       setMyAddedArtifacts(data);
     };

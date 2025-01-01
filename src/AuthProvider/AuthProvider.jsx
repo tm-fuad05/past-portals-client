@@ -9,6 +9,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
+import axios from "axios";
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -39,10 +40,28 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoader(false);
+
+      if (currentUser?.email) {
+        const user = { email: currentUser.email };
+        axios
+          .post("http://localhost:5000/jwt", user, { withCredentials: true })
+          .then((res) => {
+            console.log("login", res.data);
+            setLoader(false);
+          });
+      } else {
+        axios
+          .post("http://localhost:5000/logout", {}, { withCredentials: true })
+          .then((res) => {
+            console.log("logout", res.data);
+            setLoader(false);
+          });
+      }
     });
 
-    return () => unSubscribe;
+    return () => {
+      unSubscribe();
+    };
   }, []);
 
   const updateUsersProfileInfo = (profileInfo) => {
