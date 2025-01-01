@@ -3,15 +3,18 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import MyLikedArtifactCard from "../Layouts/MyLikedArtifactCard";
 import empty from "../assets/empty.jpg";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyLikedArtifacts = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
   const [myLikedArtifacts, setMyLikedArtifacts] = useState([]);
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/my-liked-artifacts?email=${user.email}`)
+    axiosSecure
+      .get(`/my-liked-artifacts?email=${user.email}`)
       .then((res) => setMyLikedArtifacts(res.data));
-  }, []);
+  }, [user.email]);
 
   return (
     <div className="w-11/12 mx-auto flex flex-col gap-3 ">
