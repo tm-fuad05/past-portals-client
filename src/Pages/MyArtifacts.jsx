@@ -3,15 +3,17 @@ import MyArtifactCArd from "../Layouts/MyArtifactCard";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import empty from "../assets/empty.jpg";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyArtifacts = () => {
   const { user } = useAuth();
   const [myAddedArtifacts, setMyAddedArtifacts] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     const fetchMyAddedArtifacts = async () => {
-      const { data } = await axios.get(
-        `http://localhost:5000/my-artifacts?email=${user.email}`
+      const { data } = await axiosSecure.get(
+        `/my-artifacts?email=${user.email}`
       );
       setMyAddedArtifacts(data);
     };
