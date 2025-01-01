@@ -38,18 +38,20 @@ const AddArtifacts = () => {
       likeCount: 0,
     };
 
-    axios.post("http://localhost:5000/artifacts", artifactsData).then((res) => {
-      console.log(res.data);
-      if (res.data.insertedId) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "successfully Registered",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-      }
-    });
+    axios
+      .post("https://pastportals-server.vercel.app/artifacts", artifactsData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "successfully Registered",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        }
+      });
   };
 
   return (
