@@ -113,16 +113,16 @@ const Footer = () => {
         </p>
 
         <div className="flex items-center gap-[10px] text-text">
-          <a className="text-[1.3rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-lightRed transition-all duration-300">
+          <a className="text-[1.3rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-darkRed transition-all duration-300">
             <CgFacebook />
           </a>
-          <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-lightRed transition-all duration-300">
+          <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-darkRed transition-all duration-300">
             <BsTwitter />
           </a>
-          <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-lightRed transition-all duration-300">
+          <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-darkRed transition-all duration-300">
             <BsInstagram />
           </a>
-          <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-lightRed transition-all duration-300">
+          <a className="text-[1.2rem] p-1.5 cursor-pointer rounded-full hover:text-white hover:bg-darkRed transition-all duration-300">
             <BsLinkedin />
           </a>
         </div>
