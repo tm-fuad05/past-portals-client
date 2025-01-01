@@ -75,7 +75,7 @@ const Navbar = () => {
                 <div
                   tabIndex={0}
                   role="button"
-                  className="hover:bg-gray-200 hover:rounded-full"
+                  className="hover:bg-gray-200 hover:rounded-full duration-200"
                 >
                   <img
                     src={user?.photoURL}

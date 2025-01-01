@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
-
+import "react-toastify/dist/ReactToastify.css";
 // Icons
 import { FaHeart } from "react-icons/fa";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const ArtifactDetails = () => {
   const { user } = useAuth();
   const eachArtifactData = useLoaderData();
+  const [isLiked, setIsLiked] = useState(false);
 
+  console.log(isLiked);
   const {
     artifactImage,
     artifactName,
@@ -19,21 +22,22 @@ const ArtifactDetails = () => {
     discoveredAt,
     discoveredBy,
     presentLocation,
-    isLiked,
-    likedCount,
+    likeCount,
   } = eachArtifactData;
+  const [favCount, setfavCount] = useState(likeCount);
 
-  console.log(isLiked, likedCount);
+  const likedartifact = { ...eachArtifactData, likedEmail: user.email };
 
-  const [isFavorite, setIsFavorite] = useState(isLiked);
-
-  const likedArtifact = { ...eachArtifactData, likedEmail: user.email };
-
-  const handleLike = () => {
-    setIsFavorite(true);
+  const handleLike = async () => {
+    setIsLiked(true);
+    setfavCount(favCount + 1);
     axios
-      .post("http://localhost:5000/likedArtifacts", likedArtifact)
-      .then((res) => console.log(res.data));
+      .post(`http://localhost:5000/likedArtifacts`, likedartifact)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toast.success(`You Liked ${artifactName}`);
+        }
+      });
   };
 
   return (
@@ -84,13 +88,14 @@ const ArtifactDetails = () => {
           <div className="bg-gray-50 p-4 border-t border-gray-200 text-center">
             <div className="flex items-center justify-between w-full p-4 ">
               <div className="flex items-center gap-3 ">
-                <FaHeart
-                  className={`${
-                    isFavorite ? "text-[#ff3d3d]" : "text-[#424242]"
-                  } text-[1.4rem] cursor-pointer`}
-                  onClick={() => handleLike()}
-                />
-                <span className="font-medium text-lg">{likedCount}</span>
+                <button onClick={handleLike} disabled={isLiked}>
+                  <FaHeart
+                    className={`${
+                      isLiked ? "text-[#ff3d3d] cursor-" : "text-[#424242]"
+                    } text-[1.4rem] cursor-pointer`}
+                  />
+                </button>
+                <span className="font-medium text-lg">{favCount}</span>
               </div>
             </div>
           </div>

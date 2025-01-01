@@ -3,6 +3,7 @@ import Banner from "../Components/Home Comp/Banner";
 import FAQ from "../Components/Home Comp/FAQ";
 import ArtifactsVerify from "../Components/Home Comp/ArtifactsVerify";
 import MuseumInfo from "../Components/Home Comp/MuseumInfo";
+import HighestLike from "../Components/Home Comp/HighestLike";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
           <MuseumInfo></MuseumInfo>
         </div>
       </div>
+      <HighestLike></HighestLike>
       <ArtifactsVerify></ArtifactsVerify>
       <FAQ></FAQ>
     </div>
