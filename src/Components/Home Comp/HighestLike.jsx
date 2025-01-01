@@ -7,7 +7,7 @@ const HighestLike = () => {
   useEffect(() => {
     const fetchHighestLike = async () => {
       const { data } = await axios.get(
-        "http://localhost:5000/highest-like-count"
+        "https://pastportals-server.vercel.app/highest-like-count"
       );
       setHighestLikedData(data);
     };

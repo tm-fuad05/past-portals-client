@@ -32,7 +32,10 @@ const ArtifactDetails = () => {
     setIsLiked(true);
     setfavCount(favCount + 1);
     axios
-      .post(`http://localhost:5000/likedArtifacts`, likedartifact)
+      .post(
+        `https://pastportals-server.vercel.app/likedArtifacts`,
+        likedartifact
+      )
       .then((res) => {
         if (res.data.insertedId) {
           toast.success(`You Liked ${artifactName}`);
