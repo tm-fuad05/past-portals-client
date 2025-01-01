@@ -152,10 +152,8 @@ const Navbar = () => {
 
         <aside
           className={` ${
-            mobileSidebarOpen
-              ? "translate-x-0 opacity-100 z-20"
-              : "translate-x-[200px] opacity-0 z-[-1]"
-          } lg:hidden bg-white shadow-lg p-4 text-center absolute top-[55px] right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
+            mobileSidebarOpen ? "z-20 top-[55px]" : "hidden z-[-1]"
+          } lg:hidden bg-white shadow-lg p-4 text-center absolute right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
         >
           <ul className="text-start gap-[20px] text-[1rem] text-gray-600 block">
             {navMenu}
