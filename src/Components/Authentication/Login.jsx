@@ -33,7 +33,6 @@ const Login = () => {
 
     signInUser(email, password)
       .then((result) => {
-        console.log(result.user);
         setUser(result.user);
         Swal.fire({
           position: "center",

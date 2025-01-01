@@ -12,7 +12,6 @@ const ArtifactDetails = () => {
   const eachArtifactData = useLoaderData();
   const [isLiked, setIsLiked] = useState(false);
 
-  console.log(isLiked);
   const {
     artifactImage,
     artifactName,

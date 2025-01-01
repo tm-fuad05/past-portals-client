@@ -48,7 +48,6 @@ const AuthProvider = ({ children }) => {
             withCredentials: true,
           })
           .then((res) => {
-            console.log("login", res.data);
             setLoader(false);
           });
       } else {
@@ -59,7 +58,6 @@ const AuthProvider = ({ children }) => {
             { withCredentials: true }
           )
           .then((res) => {
-            console.log("logout", res.data);
             setLoader(false);
           });
       }

@@ -41,7 +41,6 @@ const AddArtifacts = () => {
     axios
       .post("https://pastportals-server.vercel.app/artifacts", artifactsData)
       .then((res) => {
-        console.log(res.data);
         if (res.data.insertedId) {
           Swal.fire({
             position: "center",

@@ -53,7 +53,6 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
       artifactAdderName,
       artifactAdderEmail,
     };
-    console.log(artifactsData);
 
     axios
       .patch(
@@ -61,7 +60,6 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
         artifactsData
       )
       .then((res) => {
-        console.log(res.data);
         modalClose();
         if (res.data.modifiedCount > 0) {
           Swal.fire({
