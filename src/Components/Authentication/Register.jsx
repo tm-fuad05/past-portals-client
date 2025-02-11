@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 // Swal
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import Logo from "../Shared/Logo";
 
 const Register = () => {
   const { registerUser, setUser, signInWithGoogle, updateUsersProfileInfo } =
@@ -83,8 +84,11 @@ const Register = () => {
 
   return (
     <div className="bg-gradient-to-t from-gray-100 to-gray-100">
-      <div className="w-10/12 mx-auto flex min-h-screen items-center gap-32">
+      <div className="max-w-md mx-auto flex flex-col min-h-screen justify-center px-6">
         <div className="flex-grow">
+          <div className="text-center py-5">
+            <Logo />
+          </div>
           <form onSubmit={handleRegister}>
             <div className="form-control">
               <label className="label">
@@ -148,7 +152,7 @@ const Register = () => {
               {error && <p className="text-red-600 text-sm">{error}</p>}
             </div>
             <div className="form-control mt-6">
-              <button className="btn text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-blue-500 hover:scale-105 duration-500 rounded-none">
+              <button className="btn text-white bg-red-600 duration-500 rounded-none">
                 Register
               </button>
             </div>
@@ -156,7 +160,7 @@ const Register = () => {
           <div className="form-control mt-3">
             <button
               onClick={handleSignInwithGoogle}
-              className="btn bg-white border border-gray-300 hover:scale-105 duration-500 rounded-none"
+              className="btn bg-white border border-gray-300 duration-500 rounded-none"
             >
               <FcGoogle />
               Sign in with Google
@@ -167,16 +171,13 @@ const Register = () => {
               Already have an account?{" "}
               <Link
                 to="/auth/sign-in"
-                className="text-indigo-500 hover:opacity-50"
+                className="text-red-500 hover:opacity-50"
               >
                 Login
               </Link>
             </p>
           </div>
         </div>
-        <figure className="max-sm:hidden w-4/12 flex items-center ">
-          <Lottie className=" w-full" animationData={register} />
-        </figure>
       </div>
     </div>
   );

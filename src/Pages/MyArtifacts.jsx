@@ -4,11 +4,14 @@ import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import empty from "../assets/empty.jpg";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import Loader from "../Components/Shared/Loader";
 
 const MyArtifacts = () => {
   const { user } = useAuth();
   const [myAddedArtifacts, setMyAddedArtifacts] = useState([]);
   const axiosSecure = useAxiosSecure();
+
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     const fetchMyAddedArtifacts = async () => {
@@ -16,9 +19,14 @@ const MyArtifacts = () => {
         `/my-artifacts?email=${user.email}`
       );
       setMyAddedArtifacts(data);
+      setLoader(false);
     };
     fetchMyAddedArtifacts();
   }, [user.email]);
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <div>

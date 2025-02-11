@@ -34,11 +34,13 @@ const Navbar = () => {
           All Artifacts
         </li>
       </NavLink>
-      <NavLink to="/add-artifacts">
-        <li className="px-3 py-2 hover:bg-gray-100 hover:rounded-md duration-300">
-          Add Artifacts
-        </li>
-      </NavLink>
+      {user && (
+        <NavLink to="/add-artifacts">
+          <li className="px-3 py-2 hover:bg-gray-100 hover:rounded-md duration-300">
+            Add Artifacts
+          </li>
+        </NavLink>
+      )}
     </>
   );
 
@@ -138,7 +140,7 @@ const Navbar = () => {
           ) : (
             <Link
               to="/auth/sign-in"
-              className="btn text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-blue-500 hover:scale-105 duration-500 focus:outline-none"
+              className="btn text-white bg-red-600 duration-500 focus:outline-none"
             >
               Login
             </Link>

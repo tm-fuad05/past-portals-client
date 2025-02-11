@@ -7,13 +7,13 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 // Lottie
-import Lottie from "lottie-react";
-import login from "../../assets/login.json";
+
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 // Swal
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import Logo from "../Shared/Logo";
 
 const Login = () => {
   const { signInUser, setUser, signInWithGoogle } = useContext(AuthContext);
@@ -67,9 +67,12 @@ const Login = () => {
       });
   };
   return (
-    <div className="bg-gradient-to-t from-gray-100 to-gray-100">
-      <div className="w-10/12 mx-auto flex justify-center min-h-screen items-center gap-10 ">
+    <div className=" bg-gradient-to-t from-gray-100 to-gray-100">
+      <div className="max-w-md px-8 mx-auto flex justify-center min-h-screen items-center gap-10">
         <div className="flex-grow">
+          <div className="text-center py-5">
+            <Logo />
+          </div>
           <form onSubmit={handleLogin}>
             {/* Email */}
             <div className="form-control">
@@ -118,7 +121,7 @@ const Login = () => {
             </div>
             {/* Sign In button */}
             <div className="form-control mt-6">
-              <button className="btn text-white bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-indigo-500 hover:to-blue-500 hover:scale-105 duration-500 rounded-none">
+              <button className="btn text-white bg-red-600 duration-500 rounded-none">
                 Sign In
               </button>
             </div>
@@ -126,7 +129,7 @@ const Login = () => {
           <div className="form-control mt-3">
             <button
               onClick={handleSignInwithGoogle}
-              className="btn bg-white border border-gray-300 hover:scale-105 duration-500 rounded-none"
+              className="btn bg-white border border-gray-300 duration-500 rounded-none"
             >
               <FcGoogle />
               Sign in with Google
@@ -137,16 +140,13 @@ const Login = () => {
               New in this website?{" "}
               <Link
                 to="/auth/register"
-                className="text-indigo-500 hover:opacity-50"
+                className="text-red-500 hover:opacity-50"
               >
                 Register
               </Link>
             </p>
           </div>
         </div>
-        <figure className="max-sm:hidden w-1/2">
-          <Lottie className="w-full" animationData={login} />
-        </figure>
       </div>
     </div>
   );
