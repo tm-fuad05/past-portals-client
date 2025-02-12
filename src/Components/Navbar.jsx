@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import Loader from "./Shared/Loader";
 
 // react icons
 ("react-icons/io");
@@ -34,7 +35,7 @@ const Navbar = () => {
     };
   }, []);
 
-  const { user, signOutUser } = useContext(AuthContext);
+  const { user, signOutUser, loader } = useContext(AuthContext);
 
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
 
@@ -84,13 +85,13 @@ const Navbar = () => {
   return (
     <div
       className={`shadow-sm sticky top-0 z-50 ${
-        scrolled ? "bg-black/80" : ""
+        scrolled ? "bg-black/80" : "bg-white"
       } `}
     >
-      <nav className="flex items-center justify-between w-11/12 mx-auto relative py-2 md:py-4">
+      <nav className="flex items-center justify-between px-8 mx-auto relative py-2 md:py-4">
         <a
           href="/"
-          className={`text-xl md:text-2xl font-bold font-aldrich duration-300 ${
+          className={`text-xl md:text-2xl font-bold font-aldrich  ${
             scrolled ? "text-white" : "text-black"
           }`}
         >
@@ -179,6 +180,8 @@ const Navbar = () => {
                 />
               </div>
             </div>
+          ) : loader ? (
+            <span className="loading loading-spinner loading-sm"></span>
           ) : (
             <Link
               to="/auth/sign-in"
@@ -190,7 +193,7 @@ const Navbar = () => {
 
           <CiMenuFries
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            className={`text-[1.8rem] text-[#424242]c cursor-pointer lg:hidden flex duration-300 ${
+            className={`text-[1.8rem] text-[#424242]c cursor-pointer lg:hidden flex ${
               scrolled ? "text-white" : "text-black"
             }`}
           />
@@ -198,10 +201,10 @@ const Navbar = () => {
 
         <aside
           className={` ${
-            mobileSidebarOpen ? "z-20 top-[55px]" : "hidden z-[-1]"
-          } lg:hidden bg-white shadow-lg p-4 text-center absolute right-0 sm:w-[300px] w-full rounded-md transition-all duration-300`}
+            mobileSidebarOpen ? "translate-x-0" : "translate-x-[2000px]"
+          } lg:hidden bg-white shadow-xl p-4 absolute right-0 md:w-[300px] w-full rounded-md z-20 top-[56px] md:top-[75px] transition duration-300`}
         >
-          <ul className="text-start gap-[20px] text-[1rem] text-gray-600 block">
+          <ul className="text-center gap-[20px] text-[1rem] text-gray-600 block">
             {navMenu}
           </ul>
         </aside>

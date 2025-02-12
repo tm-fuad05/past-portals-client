@@ -4,6 +4,7 @@ import FAQ from "../Components/Home Comp/FAQ";
 import ArtifactsVerify from "../Components/Home Comp/ArtifactsVerify";
 import MuseumInfo from "../Components/Home Comp/MuseumInfo";
 import HighestLike from "../Components/Home Comp/HighestLike";
+import Newsletter from "../Components/Home Comp/Newsletter";
 
 const Home = () => {
   return (
@@ -19,6 +20,7 @@ const Home = () => {
       <HighestLike></HighestLike>
       <ArtifactsVerify></ArtifactsVerify>
       <FAQ></FAQ>
+      <Newsletter />
     </div>
   );
 };

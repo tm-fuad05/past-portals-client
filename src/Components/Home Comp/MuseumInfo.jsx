@@ -4,7 +4,7 @@ import { FaMapMarkerAlt, FaTicketAlt } from "react-icons/fa";
 const MuseumInfo = () => {
   return (
     <div className="min-h-screen  flex items-center justify-center w-11/12 mx-auto">
-      <div className="flex flex-col lg:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="flex flex-col lg:flex-row bg-white shadow-lg rounded-2xl overflow-hidden">
         {/* Left Section */}
         <div className="bg-gray-100 p-8 flex-1">
           <h4 className="text-sm text-gray-500 font-medium uppercase mb-2">

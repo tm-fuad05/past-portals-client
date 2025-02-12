@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 const HighestArtifactCard = ({ artifact }) => {
   return (
-    <div className=" relative bg-white shadow-md rounded-xl flex flex-col">
+    <div className=" relative bg-white shadow-md rounded-2xl flex flex-col">
       <img
         src={artifact.artifactImage}
         alt="image"

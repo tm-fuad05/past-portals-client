@@ -22,7 +22,7 @@ const ArtifactsVerify = () => {
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
             {/* Card 1 */}
-            <div className="card bg-red-100  rounded-lg p-6 text-center">
+            <div className="card bg-red-100  rounded-2xl p-6 text-center">
               <FaMicroscope className="text-4xl text-[#323232] mx-auto mb-4" />
               <h2 className="font-light text-gray-600 text-[15px]">
                 Fast, effective testing of medicines
@@ -30,7 +30,7 @@ const ArtifactsVerify = () => {
             </div>
 
             {/* Card 2 */}
-            <div className="card bg-red-100  rounded-lg p-6 text-center">
+            <div className="card bg-red-100  rounded-2xl p-6 text-center">
               <FaDna className="text-4xl text-[#323232] mx-auto mb-4" />
               <h2 className="font-light text-gray-600 text-[15px]">
                 Artificial Intelligence interprets and delivers initial findings
@@ -39,7 +39,7 @@ const ArtifactsVerify = () => {
             </div>
 
             {/* Card 3 */}
-            <div className="card bg-red-100  rounded-lg p-6 text-center">
+            <div className="card bg-red-100  rounded-2xl p-6 text-center">
               <FaFlask className="text-4xl text-[#323232] mx-auto mb-4" />
               <h2 className="font-light text-gray-600 text-[15px]">
                 Scientifically validated results recorded on blockchain guide
@@ -48,7 +48,7 @@ const ArtifactsVerify = () => {
             </div>
 
             {/* Card 4 */}
-            <div className="card bg-red-100  rounded-lg p-6 text-center">
+            <div className="card bg-red-100  rounded-2xl p-6 text-center">
               <FaNetworkWired className="text-4xl text-[#323232] mx-auto mb-4" />
               <h2 className="font-light text-gray-600 text-[15px]">
                 Deployed at any point in the supply chain

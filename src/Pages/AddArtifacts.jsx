@@ -55,7 +55,7 @@ const AddArtifacts = () => {
 
   return (
     <div className="min-h-screen md:bg-gray-100 flex items-center justify-center ">
-      <div className="w-full max-w-2xl bg-white p-8 rounded-lg md:my-20">
+      <div className="w-full max-w-2xl bg-white p-8 rounded-2xl md:my-20">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Add Artifact</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Artifact Name */}

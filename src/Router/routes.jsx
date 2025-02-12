@@ -12,11 +12,17 @@ import ErrorPage from "../Pages/ErrorPage";
 import MyArtifacts from "../Pages/MyArtifacts";
 import MyLikedArtifacts from "../Pages/MyLikedArtifacts";
 import AboutUs from "../Pages/AboutUs";
+import ScrollToTop from "./ScrollToTop";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root></Root>,
+    element: (
+      <>
+        <ScrollToTop />
+        <Root />
+      </>
+    ),
     children: [
       {
         path: "/",
