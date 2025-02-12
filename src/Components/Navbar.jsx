@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import Loader from "./Shared/Loader";
 
 // react icons
 ("react-icons/io");
 import { TbLogout2 } from "react-icons/tb";
 import { CiMenuFries } from "react-icons/ci";
-
 import { IoIosArrowUp } from "react-icons/io";
+import { IoMdSunny } from "react-icons/io";
+import { FaMoon } from "react-icons/fa";
+
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 // Swal
@@ -18,7 +19,14 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  console.log(scrolled);
+  const [switchTheme, setSwitchTheme] = useState(false);
+
+  if (switchTheme) {
+    document.querySelector("html").setAttribute("class", "dark");
+  } else {
+    document.querySelector("html").removeAttribute("class");
+  }
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -190,6 +198,14 @@ const Navbar = () => {
               Login
             </Link>
           )}
+          <div
+            className={`border border-slate-400 p-2 rounded-lg ${
+              scrolled ? "text-slate-300" : "text-slate-600"
+            }`}
+            onClick={() => setSwitchTheme(!switchTheme)}
+          >
+            {switchTheme ? <IoMdSunny /> : <FaMoon />}
+          </div>
 
           <CiMenuFries
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
