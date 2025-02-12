@@ -25,7 +25,7 @@ const MuseumInfo = () => {
         </div>
 
         {/* Right Section */}
-        <div className="bg-gray-800 text-white p-8 flex-1">
+        <div className="bg-gray-800  text-white p-8 flex-1">
           {/* Location Info */}
           <div className="mb-6">
             <FaMapMarkerAlt className="text-3xl text-red-500 mb-2" />

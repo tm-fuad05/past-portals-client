@@ -16,7 +16,7 @@ const HighestLike = () => {
 
   return (
     <div className="w-11/12 mx-auto mb-24">
-      <h2 className="text-2xl md:text-3xl text-center font-bold mb-10">
+      <h2 className="text-2xl md:text-3xl text-center font-bold mb-10  dark:text-white">
         Highest Like Artifacts
       </h2>
       <div className="my-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

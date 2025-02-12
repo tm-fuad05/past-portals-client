@@ -4,16 +4,16 @@ import { FaMicroscope, FaDna, FaFlask, FaNetworkWired } from "react-icons/fa";
 
 const ArtifactsVerify = () => {
   return (
-    <div className="bg-gray-100 bg-opacity-60">
+    <div className="bg-gray-100 dark:bg-gray-800/60 bg-opacity-60">
       <div className="min-h-screen flex lg:flex-row flex-col items-center justify-center w-11/12 mx-auto lg:gap-10">
         <div className="text-center mb-8 space-y-2  pt-10">
-          <button className="border border-black rounded-full px-2 py-[3px] text-[10px]">
+          <button className="border border-black dark:border-gray-100 dark:text-white rounded-full px-2 py-[3px] text-[10px]">
             The Solution
           </button>
-          <h1 className="text-2xl md:text-3xl font-bold">
+          <h1 className="text-2xl dark:text-white md:text-3xl font-bold">
             Artifacts <span className="text-darkRed">VERIFY</span>
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-200">
             A powerful combination of chemical analysis and artificial
             intelligence
           </p>
@@ -55,7 +55,7 @@ const ArtifactsVerify = () => {
               </h2>
             </div>
           </div>
-          <button className="btn bg-red-500 text-white my-8 block mx-auto">
+          <button className="btn border-none bg-red-500 text-white my-8 block mx-auto">
             Learn more
           </button>
         </div>

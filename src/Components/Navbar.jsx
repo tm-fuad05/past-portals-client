@@ -19,13 +19,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
-  const [switchTheme, setSwitchTheme] = useState(false);
+  const [switchTheme, setSwitchTheme] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
 
-  if (switchTheme) {
-    document.querySelector("html").setAttribute("class", "dark");
-  } else {
-    document.querySelector("html").removeAttribute("class");
-  }
+  useEffect(() => {
+    if (switchTheme) {
+      document.querySelector("html").setAttribute("class", "dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.querySelector("html").removeAttribute("class");
+      localStorage.setItem("theme", "light");
+    }
+  }, [switchTheme]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,14 +99,16 @@ const Navbar = () => {
   return (
     <div
       className={`shadow-sm sticky top-0 z-50 ${
-        scrolled ? "bg-black/80" : "bg-white"
+        scrolled
+          ? "bg-black/80 dark:bg-gray-800/50 dark:backdrop-blur-3xl"
+          : "dark:bg-gray-800/60 bg-white"
       } `}
     >
       <nav className="flex items-center justify-between px-8 mx-auto relative py-2 md:py-4">
         <a
           href="/"
-          className={`text-xl md:text-2xl font-bold font-aldrich ${
-            scrolled ? "text-white" : "text-black"
+          className={`text-xl dark md:text-2xl font-bold font-aldrich ${
+            scrolled ? "text-white" : "text-black dark:text-white"
           }`}
         >
           <span className="text-red-600">P</span>asts
@@ -108,7 +116,7 @@ const Navbar = () => {
         </a>
         <ul
           className={`items-center gap-[10px] text-[1rem] text-[#424242] lg:flex hidden ${
-            scrolled ? "text-white" : "text-black"
+            scrolled ? "text-white" : "text-black dark:text-white"
           }`}
         >
           {navMenu}
@@ -155,7 +163,7 @@ const Navbar = () => {
               >
                 <h1
                   className={`text-[1rem] font-[400] text-gray-600 hidden md:block ${
-                    scrolled ? "text-white" : "text-black"
+                    scrolled ? "text-white" : "text-black dark:text-white"
                   }`}
                 >
                   My Profile
@@ -183,7 +191,7 @@ const Navbar = () => {
                   className={` ${
                     accountMenuOpen ? "rotate-0" : "rotate-[180deg]"
                   } ${
-                    scrolled ? "text-white" : "text-black"
+                    scrolled ? "text-white" : "text-black dark:text-white"
                   } transition-all duration-300 text-gray-600 sm:block`}
                 />
               </div>
@@ -199,8 +207,8 @@ const Navbar = () => {
             </Link>
           )}
           <div
-            className={`border border-slate-400 p-2 rounded-lg ${
-              scrolled ? "text-slate-300" : "text-slate-600"
+            className={`border border-slate-400 p-2 rounded-lg cursor-pointer ${
+              scrolled ? "text-slate-300" : "text-slate-600 dark:text-slate-300"
             }`}
             onClick={() => setSwitchTheme(!switchTheme)}
           >

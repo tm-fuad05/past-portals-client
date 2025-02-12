@@ -40,25 +40,27 @@ const FAQ = () => {
 
   return (
     <div className=" w-11/12 mx-auto my-24">
-      <h3 className="text-2xl md:text-3xl font-bold mb-4">
+      <h3 className="text-2xl md:text-3xl font-bold mb-4 dark:text-white">
         Additional Details
       </h3>
       <div className="flex gap-3 flex-col rounded-xl p-5 border ">
         {accordingData?.map((according, index) => (
           <article
             key={index}
-            className={` rounded py-3 border-b ${index === 4 && "border-none"}`}
+            className={` rounded py-3 border-b  ${
+              index === 4 && "border-none"
+            }`}
           >
             <div
               className="flex gap-2 cursor-pointer items-center justify-between w-full"
               onClick={() => handleClick(index)}
             >
-              <h2 className="text-gray-700 font-semibold text-[1.2rem]">
+              <h2 className="text-gray-700 font-semibold text-[1.2rem] dark:text-white">
                 {according.title}
               </h2>
               <p>
                 <FaChevronDown
-                  className={`text-[1.2rem] text-[#424242] transition-all duration-300 ${
+                  className={`text-[1.2rem] text-[#424242] transition-all duration-300 dark:text-white ${
                     isAccordingOpen === index && "rotate-[180deg] !text-red-600"
                   }`}
                 />
@@ -71,7 +73,7 @@ const FAQ = () => {
                   : "grid-rows-[0fr] opacity-0"
               }`}
             >
-              <p className="text-[#424242] text-[0.9rem] overflow-hidden">
+              <p className="text-[#424242] text-[0.9rem] overflow-hidden dark:text-gray-300">
                 {according.description}
               </p>
             </div>

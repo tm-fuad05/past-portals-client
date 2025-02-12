@@ -54,12 +54,12 @@ const Newsletter = () => {
       </div>
 
       {/* Content */}
-      <div className="relative w-full max-w-lg mx-auto bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-red-100">
+      <div className="relative w-full max-w-lg mx-auto dark:bg-slate-700/50 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-red-100 dark:border-none">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 dark:text-white">
             Join Our Collection
           </h2>
-          <p className="text-gray-600">
+          <p className="text-gray-600  dark:text-gray-300">
             Subscribe to receive updates about new artifacts, exhibitions, and
             exclusive previews of our latest restorations.
           </p>
@@ -71,7 +71,7 @@ const Newsletter = () => {
               type="text"
               name="name"
               placeholder="Enter your name"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 backdrop-blur-sm focus:outline-none"
+              className="w-full px-4 py-3 rounded-xl border dark:border-none dark:text-slate-950 dark:placeholder:text-slate-950 border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 dark:bg-slate-300 backdrop-blur-sm focus:outline-none"
               required
             />
           </div>
@@ -80,7 +80,7 @@ const Newsletter = () => {
               type="email"
               name="email"
               placeholder="Enter your email"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 backdrop-blur-sm focus:outline-none"
+              className="w-full px-4 py-3 rounded-xl border dark:border-none dark:text-slate-950 dark:placeholder:text-slate-950  border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 dark:bg-slate-300 backdrop-blur-sm focus:outline-none"
               required
             />
           </div>
@@ -95,7 +95,7 @@ const Newsletter = () => {
               type="text"
               name="subject"
               placeholder="Subject"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 backdrop-blur-sm focus:outline-none"
+              className="w-full px-4 py-3 rounded-xl border dark:border-none dark:text-slate-950 dark:placeholder:text-slate-950 border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 dark:bg-slate-300 backdrop-blur-sm focus:outline-none"
               required
             />
           </div>
@@ -104,7 +104,7 @@ const Newsletter = () => {
               type="text"
               name="message"
               placeholder="Message"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 backdrop-blur-sm focus:outline-none"
+              className="w-full px-4 py-3 rounded-xl border dark:border-none dark:text-slate-950 dark:placeholder:text-slate-950 border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 dark:bg-slate-300 backdrop-blur-sm focus:outline-none"
               rows={5}
               required
             />
@@ -127,7 +127,7 @@ const Newsletter = () => {
         </form>
 
         {/* Additional Info */}
-        <p className="text-sm text-gray-500 text-center mt-6">
+        <p className="text-sm text-gray-500 text-center mt-6 dark:text-gray-200">
           Join our community of history enthusiasts and artifact collectors. We
           send newsletters twice a month.
         </p>
