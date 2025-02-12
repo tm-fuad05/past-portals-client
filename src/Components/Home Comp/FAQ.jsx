@@ -39,13 +39,16 @@ const FAQ = () => {
     setIsAccordingOpen((prevIndex) => (prevIndex === index ? null : index));
 
   return (
-    <div className=" w-11/12 mx-auto my-10 ">
+    <div className=" w-11/12 mx-auto my-24">
       <h3 className="text-2xl md:text-3xl font-bold mb-4">
         Additional Details
       </h3>
       <div className="flex gap-3 flex-col rounded-xl p-5 border ">
         {accordingData?.map((according, index) => (
-          <article key={index} className=" rounded py-3 border-b">
+          <article
+            key={index}
+            className={` rounded py-3 border-b ${index === 4 && "border-none"}`}
+          >
             <div
               className="flex gap-2 cursor-pointer items-center justify-between w-full"
               onClick={() => handleClick(index)}

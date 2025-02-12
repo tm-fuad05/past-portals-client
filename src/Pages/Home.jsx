@@ -19,8 +19,8 @@ const Home = () => {
       </div>
       <HighestLike></HighestLike>
       <ArtifactsVerify></ArtifactsVerify>
-      <FAQ></FAQ>
       <Newsletter />
+      <FAQ></FAQ>
     </div>
   );
 };

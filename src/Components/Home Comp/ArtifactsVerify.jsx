@@ -5,7 +5,7 @@ import { FaMicroscope, FaDna, FaFlask, FaNetworkWired } from "react-icons/fa";
 const ArtifactsVerify = () => {
   return (
     <div className="bg-gray-100 bg-opacity-60">
-      <div className="min-h-screen flex lg:flex-row flex-col items-center justify-center my-20 w-11/12 mx-auto lg:gap-10">
+      <div className="min-h-screen flex lg:flex-row flex-col items-center justify-center w-11/12 mx-auto lg:gap-10">
         <div className="text-center mb-8 space-y-2  pt-10">
           <button className="border border-black rounded-full px-2 py-[3px] text-[10px]">
             The Solution

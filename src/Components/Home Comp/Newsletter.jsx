@@ -1,162 +1,139 @@
-import React, { useState } from "react";
-import {
-  IoMailOutline,
-  IoSendSharp,
-  IoCheckmarkCircle,
-  IoCloseCircle,
-} from "react-icons/io5";
-import { BiLoaderAlt } from "react-icons/bi";
+import React, { useState, useEffect, useRef } from "react";
+import { FiSend, FiLoader } from "react-icons/fi";
+import emailjs from "@emailjs/browser";
+import slider2 from "../../assets/slider2.jpg";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
-const NewsletterSignup = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [status, setStatus] = useState("idle");
-  const [feedback, setFeedback] = useState("");
+const Newsletter = () => {
+  const form = useRef();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("loading");
+    setLoading(true);
 
-    try {
-      await window.emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-        to_name: formData.name,
-        to_email: formData.email,
-        message: formData.message,
-      });
-
-      setStatus("success");
-      setFeedback("Thanks for subscribing! We'll be in touch soon.");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      setStatus("error");
-      setFeedback("Oops! Something went wrong. Please try again.");
-      console.error("Error:", error);
-    }
-  };
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    emailjs
+      .sendForm("service_fwh8eve", "template_60bjc2k", form.current, {
+        publicKey: "vuYSD7atTVsOA0PuN",
+      })
+      .then(
+        () => {
+          Swal.fire({
+            title: "Message sent",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setLoading(false);
+          form.current.reset();
+        },
+        (error) => {
+          Swal.fire({
+            title: "Something went wrong!",
+            text: `${error}`,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      );
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-      <div className="p-8">
-        {/* Header Section */}
-        <div className="text-center">
-          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center">
-            <IoMailOutline className="w-6 h-6 text-red-600" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Stay Connected
+    <div className="relative min-h-[500px] flex items-center justify-center p-6">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradien(circle_500px_at_50%_50%,rgba(255,255,255,0.1),transparen)]" />
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage: `url(${slider2})`,
+            opacity: 0.7,
+          }}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative w-full max-w-lg mx-auto bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-8 border border-red-100">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+            Join Our Collection
           </h2>
-          <p className="text-gray-600 mb-8">
-            Subscribe to our newsletter for updates, news, and exclusive content
+          <p className="text-gray-600">
+            Subscribe to receive updates about new artifacts, exhibitions, and
+            exclusive previews of our latest restorations.
           </p>
         </div>
 
-        {/* Form Section */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form ref={form} onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Name
-            </label>
             <input
-              id="name"
-              name="name"
               type="text"
-              value={formData.name}
-              onChange={handleChange}
+              name="name"
+              placeholder="Enter your name"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 backdrop-blur-sm focus:outline-none"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors"
-              placeholder="Your name"
             />
           </div>
-
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Email
-            </label>
             <input
-              id="email"
-              name="email"
               type="email"
-              value={formData.email}
-              onChange={handleChange}
+              name="email"
+              placeholder="Enter your email"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 backdrop-blur-sm focus:outline-none"
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors"
-              placeholder="your@email.com"
             />
           </div>
+          <input
+            type="hidden"
+            name="reply_to"
+            value={form.current?.email?.value}
+          />
 
           <div>
-            <label
-              htmlFor="message"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Message (Optional)
-            </label>
+            <input
+              type="text"
+              name="subject"
+              placeholder="Subject"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 backdrop-blur-sm focus:outline-none"
+              required
+            />
+          </div>
+          <div>
             <textarea
-              id="message"
+              type="text"
               name="message"
-              value={formData.message}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 focus:border-red-600 transition-colors"
-              placeholder="Tell us what you're interested in..."
-              rows={3}
+              placeholder="Message"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 transition bg-white/50 backdrop-blur-sm focus:outline-none"
+              rows={5}
+              required
             />
           </div>
 
           <button
             type="submit"
-            disabled={status === "loading"}
-            className="w-full flex items-center justify-center px-6 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-red-600 to-rose-500 text-white py-3 px-6 rounded-xl font-medium flex items-center justify-center hover:from-red-700 hover:to-rose-600 transition-all focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50"
           >
-            {status === "loading" ? (
-              <>
-                <BiLoaderAlt className="animate-spin mr-2 h-5 w-5" />
-                Subscribing...
-              </>
+            {loading ? (
+              <>Subscribing...</>
             ) : (
               <>
-                <IoSendSharp className="mr-2 h-5 w-5" />
+                <FiSend className="mr-2" />
                 Subscribe Now
               </>
             )}
           </button>
         </form>
 
-        {/* Feedback Message */}
-        {feedback && (
-          <div
-            className={`mt-6 flex items-center justify-center p-4 rounded-lg ${
-              status === "success"
-                ? "bg-green-50 text-green-700"
-                : "bg-red-50 text-red-700"
-            }`}
-          >
-            {status === "success" ? (
-              <IoCheckmarkCircle className="h-5 w-5 mr-2" />
-            ) : (
-              <IoCloseCircle className="h-5 w-5 mr-2" />
-            )}
-            <p className="text-sm font-medium">{feedback}</p>
-          </div>
-        )}
+        {/* Additional Info */}
+        <p className="text-sm text-gray-500 text-center mt-6">
+          Join our community of history enthusiasts and artifact collectors. We
+          send newsletters twice a month.
+        </p>
       </div>
     </div>
   );
 };
 
-export default NewsletterSignup;
+export default Newsletter;

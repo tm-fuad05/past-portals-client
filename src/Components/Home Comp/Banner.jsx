@@ -24,7 +24,7 @@ const Banner = () => {
         }}
         loop={true}
         slidesPerView={1}
-        className="mySwiper rounded-2xl"
+        className="mySwiper rounded-xl"
       >
         <SwiperSlide>
           <figure className="relative object-cover w-full h-[600px]">
