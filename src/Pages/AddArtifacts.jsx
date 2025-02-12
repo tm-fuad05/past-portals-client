@@ -4,12 +4,15 @@ import useAuth from "../hooks/useAuth";
 // Swal
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
+import { useState } from "react";
 
 const AddArtifacts = () => {
   const { user } = useAuth();
+  const [loader, setLoader] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoader(true);
     const form = e.target;
 
     const artifactName = form.artifactName.value;
@@ -49,6 +52,8 @@ const AddArtifacts = () => {
             showConfirmButton: false,
             timer: 1000,
           });
+          setLoader(false);
+          form.reset();
         }
       });
   };
@@ -204,8 +209,11 @@ const AddArtifacts = () => {
 
           {/* Submit Button */}
           <div>
-            <button className="btn bg-gradient-to-r from-primaryRed to-darkRed text-white w-full font-semibold py-2 px-4  shadow-lg hover:from-lightRed hover:to-primaryRed">
-              Add Artifact
+            <button
+              disabled={loader}
+              className="rounded-lg bg-gradient-to-r from-primaryRed to-darkRed text-white w-full font-semibold py-3 px-4  shadow-lg hover:from-lightRed hover:to-primaryRed"
+            >
+              {loader ? "Adding..." : "Add Artifact"}
             </button>
           </div>
         </form>

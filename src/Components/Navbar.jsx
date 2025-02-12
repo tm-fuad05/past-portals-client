@@ -91,7 +91,7 @@ const Navbar = () => {
       <nav className="flex items-center justify-between px-8 mx-auto relative py-2 md:py-4">
         <a
           href="/"
-          className={`text-xl md:text-2xl font-bold font-aldrich  ${
+          className={`text-xl md:text-2xl font-bold font-aldrich ${
             scrolled ? "text-white" : "text-black"
           }`}
         >
