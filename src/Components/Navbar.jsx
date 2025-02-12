@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // react icons
 ("react-icons/io");
@@ -16,6 +16,24 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  console.log(scrolled);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const { user, signOutUser } = useContext(AuthContext);
 
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
@@ -41,6 +59,11 @@ const Navbar = () => {
           </li>
         </NavLink>
       )}
+      <NavLink to="/about-us">
+        <li className="px-3 py-2 hover:bg-gray-100 hover:rounded-md duration-300">
+          About Us
+        </li>
+      </NavLink>
     </>
   );
 
@@ -59,13 +82,26 @@ const Navbar = () => {
   };
 
   return (
-    <div className="shadow-sm">
-      <nav className="flex items-center justify-between w-11/12 mx-auto relative py-2 md:py-4 ">
-        <a href="/" className="text-2xl font-bold font-aldrich">
+    <div
+      className={`shadow-sm sticky top-0 z-50 ${
+        scrolled ? "bg-black/80" : ""
+      } `}
+    >
+      <nav className="flex items-center justify-between w-11/12 mx-auto relative py-2 md:py-4">
+        <a
+          href="/"
+          className={`text-xl md:text-2xl font-bold font-aldrich duration-300 ${
+            scrolled ? "text-white" : "text-black"
+          }`}
+        >
           <span className="text-red-600">P</span>asts
           <span className="text-red-600">P</span>ortals
         </a>
-        <ul className="items-center gap-[10px] text-[1rem] text-[#424242] lg:flex hidden">
+        <ul
+          className={`items-center gap-[10px] text-[1rem] text-[#424242] lg:flex hidden ${
+            scrolled ? "text-white" : "text-black"
+          }`}
+        >
           {navMenu}
         </ul>
 
@@ -108,7 +144,11 @@ const Navbar = () => {
                 className="flex items-center gap-[10px] cursor-pointer relative z-20"
                 onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               >
-                <h1 className="text-[1rem] font-[400] text-gray-600 hidden md:block">
+                <h1
+                  className={`text-[1rem] font-[400] text-gray-600 hidden md:block ${
+                    scrolled ? "text-white" : "text-black"
+                  }`}
+                >
                   My Profile
                 </h1>
 
@@ -131,8 +171,10 @@ const Navbar = () => {
                 </div>
 
                 <IoIosArrowUp
-                  className={`${
+                  className={` ${
                     accountMenuOpen ? "rotate-0" : "rotate-[180deg]"
+                  } ${
+                    scrolled ? "text-white" : "text-black"
                   } transition-all duration-300 text-gray-600 sm:block`}
                 />
               </div>
@@ -148,7 +190,9 @@ const Navbar = () => {
 
           <CiMenuFries
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-            className="text-[1.8rem] text-[#424242]c cursor-pointer lg:hidden flex"
+            className={`text-[1.8rem] text-[#424242]c cursor-pointer lg:hidden flex duration-300 ${
+              scrolled ? "text-white" : "text-black"
+            }`}
           />
         </div>
 

@@ -37,7 +37,7 @@ const MyArtifacts = () => {
         <hr />
         {myAddedArtifacts?.length === 0 ? (
           <div className="w-7/12 mx-auto my-20">
-            <img src={empty} alt="" />
+            <img className="md:max-w-md mx-auto" src={empty} alt="" />
             <h2 className="text-2xl lg:text-3xl font-bold text-gray-500 text-center">
               No Data Found
             </h2>

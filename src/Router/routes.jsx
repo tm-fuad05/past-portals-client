@@ -11,6 +11,7 @@ import ArtifactDetails from "../Pages/ArtifactDetails";
 import ErrorPage from "../Pages/ErrorPage";
 import MyArtifacts from "../Pages/MyArtifacts";
 import MyLikedArtifacts from "../Pages/MyLikedArtifacts";
+import AboutUs from "../Pages/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
             <MyLikedArtifacts></MyLikedArtifacts>
           </PrivateLayout>
         ),
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
       },
     ],
   },

@@ -3,17 +3,26 @@ import useAuth from "../hooks/useAuth";
 import MyLikedArtifactCard from "../Layouts/MyLikedArtifactCard";
 import empty from "../assets/empty.jpg";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import Loader from "../Components/Shared/Loader";
 
 const MyLikedArtifacts = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const [myLikedArtifacts, setMyLikedArtifacts] = useState([]);
+
+  const [loader, setLoader] = useState(true);
+
   useEffect(() => {
-    axiosSecure
-      .get(`/my-liked-artifacts?email=${user.email}`)
-      .then((res) => setMyLikedArtifacts(res.data));
+    axiosSecure.get(`/my-liked-artifacts?email=${user.email}`).then((res) => {
+      setMyLikedArtifacts(res.data);
+      setLoader(false);
+    });
   }, [user.email]);
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-11/12 mx-auto flex flex-col gap-3 ">
@@ -23,7 +32,7 @@ const MyLikedArtifacts = () => {
       <hr />
       {myLikedArtifacts.length === 0 ? (
         <div className="w-7/12 mx-auto my-20">
-          <img src={empty} alt="" />
+          <img className=" md:max-w-md mx-auto" src={empty} alt="" />
           <h2 className="text-2xl lg:text-3xl font-bold text-gray-500 text-center">
             No Data Found
           </h2>

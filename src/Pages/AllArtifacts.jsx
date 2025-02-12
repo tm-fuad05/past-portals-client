@@ -4,10 +4,13 @@ import React, { useEffect, useState } from "react";
 import ArtifactCard from "../Layouts/ArtifactCard";
 import empty from "../assets/empty.jpg";
 
+import Loader from "../Components/Shared/Loader";
+
 const AllArtifacts = () => {
   const [allArtifacts, setAllArtifacts] = useState([]);
 
   const [search, setSearch] = useState("");
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
     const fetchaAllArtifacts = async () => {
@@ -15,9 +18,14 @@ const AllArtifacts = () => {
         `https://pastportals-server.vercel.app/artifacts?search=${search}`
       );
       setAllArtifacts(data);
+      setLoader(false);
     };
     fetchaAllArtifacts();
   }, [search]);
+
+  if (loader) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-11/12 mx-auto">
