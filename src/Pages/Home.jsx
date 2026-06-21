@@ -8,19 +8,17 @@ import Newsletter from "../Components/Home Comp/Newsletter";
 
 const Home = () => {
   return (
-    <div>
-      <div>
-        <div className="relative mb-[880px] md:mb-[650px] lg:mb-[400px]">
-          <Banner></Banner>
-        </div>
-        <div className="absolute left-1/2 -translate-x-1/2 w-11/12 md:w-10/12 lg:w-9/12 top-[570px] md:top-[600px] lg:top-[460px] z-10">
-          <MuseumInfo></MuseumInfo>
-        </div>
+    <div className="space-y-32">
+      <div className="space-y-16">
+        <Banner></Banner>
+        <MuseumInfo></MuseumInfo>
       </div>
       <HighestLike></HighestLike>
+
       <ArtifactsVerify></ArtifactsVerify>
-      <Newsletter />
       <FAQ></FAQ>
+
+      <Newsletter />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MyArtifactCArd from "../Layouts/MyArtifactCard";
+import MyArtifactCArd from "../Cards/MyArtifactCard";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import empty from "../assets/empty.jpg";
@@ -16,7 +16,7 @@ const MyArtifacts = () => {
   useEffect(() => {
     const fetchMyAddedArtifacts = async () => {
       const { data } = await axiosSecure.get(
-        `/my-artifacts?email=${user.email}`
+        `/my-artifacts?email=${user.email}`,
       );
       setMyAddedArtifacts(data);
       setLoader(false);

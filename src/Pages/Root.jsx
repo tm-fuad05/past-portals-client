@@ -1,9 +1,9 @@
 import React from "react";
 
 import Login from "../Components/Authentication/Login";
-import Navbar from "../Components/Navbar";
+import Navbar from "../layout/Navbar";
 import { Outlet } from "react-router-dom";
-import Footer from "../Components/Footer";
+import Footer from "../layout/Footer";
 
 const Root = () => {
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
-import MyLikedArtifactCard from "../Layouts/MyLikedArtifactCard";
+import MyLikedArtifactCard from "../Cards/MyLikedArtifactCard";
 import empty from "../assets/empty.jpg";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import Loader from "../Components/Shared/Loader";
