@@ -56,7 +56,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 mb-32 overflow-hidden">
+    <div className="w-11/12 mx-auto mb-32 overflow-hidden">
       {/* Section Headline Module */}
       <motion.div
         initial={{ opacity: 0, x: -30 }}

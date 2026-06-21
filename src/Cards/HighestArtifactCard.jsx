@@ -11,7 +11,7 @@ const HighestArtifactCard = ({ artifact }) => {
         y: -6,
         boxShadow: "0 20px 40px -15px rgba(239, 68, 68, 0.08)",
       }}
-      className="group relative bg-white border border-gray-200/60 dark:bg-slate-900/40 dark:border-white/10 rounded-3xl flex flex-col overflow-hidden transition-all duration-300"
+      className="group relative bg-white border border-gray-200/60 dark:bg-slate-900/40  dark:border-white/10 rounded-3xl flex flex-col overflow-hidden transition-all duration-300"
     >
       {/* Visual Chamber */}
       <div className="relative w-full h-64 overflow-hidden">
@@ -33,7 +33,7 @@ const HighestArtifactCard = ({ artifact }) => {
           {artifact?.historicalContext}
         </p>
 
-        <div className="w-full h-[1px] bg-gray-100 dark:bg-slate-900/40 my-1" />
+        <div className="w-full h-[1px] bg-gray-100 dark:bg-slate-900/40  my-1" />
 
         <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 tracking-wide">
           Discovered By:{" "}

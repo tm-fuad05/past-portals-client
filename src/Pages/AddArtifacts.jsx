@@ -81,7 +81,7 @@ const AddArtifacts = () => {
 
       <div className="w-full max-w-3xl relative z-10 space-y-6">
         {/* Core Terminal Form Shell */}
-        <div className="bg-white border border-gray-200/60 dark:bg-slate-900/40 dark:border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-gray-200/50 dark:shadow-none backdrop-blur-xl">
+        <div className="bg-white border border-gray-200/60 dark:bg-slate-900/40  dark:border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-gray-200/50 dark:shadow-none backdrop-blur-xl">
           {/* Header Dashboard Info */}
           <div className="space-y-1 mb-8 border-b border-gray-100 dark:border-white/5 pb-5 text-center sm:text-left">
             <h2 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white uppercase">

@@ -11,7 +11,7 @@ const ArtifactCard = ({ artifact }) => {
         y: -6,
         boxShadow: "0 20px 40px -15px rgba(239, 68, 68, 0.08)",
       }}
-      className="h-full group relative bg-white border border-gray-200/60 dark:bg-slate-900/40 dark:border-white/10 rounded-3xl flex flex-col overflow-hidden transition-all duration-300"
+      className="h-full group relative bg-white border border-gray-200/60 dark:bg-slate-900/40  dark:border-white/10 rounded-3xl flex flex-col overflow-hidden transition-all duration-300"
     >
       {/* Dynamic Background Glow Node on Hover */}
       <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-gradient-to-br from-redStart/10 to-transparent rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

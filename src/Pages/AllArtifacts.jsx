@@ -43,7 +43,7 @@ const AllArtifacts = () => {
   };
 
   return (
-    <div className="w-full max-w-[1400px] mx-auto px-6 md:px-10 lg:px-16 py-12">
+    <div className="w-11/12 mx-auto py-12">
       {/* Search Terminal Core */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

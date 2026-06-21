@@ -66,7 +66,7 @@ const ArtifactDetails = () => {
 
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Core Showcase Card Dashboard */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 rounded-3xl border border-gray-200/60 dark:border-white/10 bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl shadow-2xl shadow-gray-200/40 dark:shadow-none overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-12 rounded-3xl border border-gray-200/60 dark:border-white/10 bg-white/80 dark:bg-slate-900/40  backdrop-blur-xl shadow-2xl shadow-gray-200/40 dark:shadow-none overflow-hidden">
           {/* Left Block: Cinematic Image Exhibition */}
           <div className="lg:col-span-5 relative min-h-[320px] sm:min-h-[400px] lg:min-h-full overflow-hidden group">
             <img

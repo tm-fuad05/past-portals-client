@@ -77,7 +77,7 @@ const Login = () => {
         </div>
 
         {/* Core Glassmorphic Form Terminal */}
-        <div className="bg-white border border-gray-200/60 dark:bg-slate-900/40 dark:border-white/10 rounded-3xl p-6 md:p-8 shadow-xl shadow-gray-200/50 dark:shadow-none backdrop-blur-xl">
+        <div className="bg-white border border-gray-200/60 dark:bg-slate-900/40  dark:border-white/10 rounded-3xl p-6 md:p-8 shadow-xl shadow-gray-200/50 dark:shadow-none backdrop-blur-xl">
           <div className="space-y-1 mb-6 text-center md:text-left">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
               Welcome{" "}

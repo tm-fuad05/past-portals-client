@@ -68,7 +68,7 @@ const MyArtifactCard = ({
   };
 
   return (
-    <div className="h-full flex flex-col rounded-3xl border border-gray-200/60 dark:border-white/10 bg-white/80 dark:bg-slate-900/40 backdrop-blur-xl shadow-xl shadow-gray-200/40 dark:shadow-none overflow-hidden group hover:border-primaryRed/30 dark:hover:border-primaryRed/30">
+    <div className="h-full flex flex-col rounded-3xl border border-gray-200/60 dark:border-white/10 bg-white/80 dark:bg-slate-900/40  backdrop-blur-xl shadow-xl shadow-gray-200/40 dark:shadow-none overflow-hidden group hover:border-primaryRed/30 dark:hover:border-primaryRed/30">
       {/* Image Exhibition Section */}
       <div className="relative h-56 w-full overflow-hidden bg-gray-100 dark:bg-slate-900">
         <img
