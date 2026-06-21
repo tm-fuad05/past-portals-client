@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { TbLogout2 } from "react-icons/tb";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { IoIosArrowDown, IoMdSunny } from "react-icons/io";
@@ -41,6 +41,22 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setAccountMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
   const logOut = () => {
     signOutUser()
       .then(() => {
@@ -73,7 +89,7 @@ const Navbar = () => {
         {/* Brand Core Identity */}
         <a
           href="/"
-          className="text-xl md:text-2xl font-bold tracking-tighter uppercase text-gray-900 dark:text-white select-none"
+          className="text-xl md:text-2xl font-bold tracking-tighter select-none"
         >
           <Logo />
         </a>
@@ -115,14 +131,14 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           {/* Theme Dynamic Controller Button */}
           <button
-            className="p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed transition-all duration-300 cursor-pointer text-sm"
+            className="hidden md:block p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed transition-all duration-300 cursor-pointer text-sm"
             onClick={() => setSwitchTheme(!switchTheme)}
           >
             {switchTheme ? <IoMdSunny /> : <FaMoon />}
           </button>
           {/* User Active Account Panel */}
           {user && user?.email ? (
-            <div className="flex items-center gap-3 relative">
+            <div className="relative" ref={dropdownRef}>
               {/* Profile Avatar Trigger Button */}
               <div
                 className="flex items-center gap-2 pl-2 pr-3 py-1.5 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl cursor-pointer select-none group transition-all duration-300 hover:border-primaryRed/30"
@@ -134,27 +150,33 @@ const Navbar = () => {
                   className="w-7 h-7 rounded-xl object-cover ring-2 ring-white dark:ring-slate-800"
                 />
                 <IoIosArrowDown
-                  className={`text-xs text-gray-400 dark:text-gray-500 transition-transform duration-300 ${
-                    accountMenuOpen ? "rotate-180 text-primaryRed" : "rotate-0"
+                  className={`text-xs text-gray-500 dark:text-white transition-transform duration-300 ${
+                    accountMenuOpen
+                      ? "rotate-180 text-primaryRed dark:text-primaryRed"
+                      : "rotate-0"
                   }`}
                 />
               </div>
 
               {/* Account Floating Flyout Deck */}
               <div
-                className={`absolute top-12 right-0 bg-white/95 border border-gray-100 rounded-2xl w-56 p-2 shadow-2xl backdrop-blur-xl dark:bg-slate-900/95 dark:border-white/10 flex flex-col gap-1 transition-all duration-300 origin-top-right ${
+                className={`absolute top-[60px] right-0 bg-white/95 border border-gray-100 rounded-2xl w-56 p-2 shadow-2xl backdrop-blur-xl dark:bg-[#060911] dark:border-white/10 flex flex-col gap-1 transition-all duration-300 origin-top-right ${
                   accountMenuOpen
                     ? "scale-100 opacity-100 z-50"
                     : "scale-95 opacity-0 pointer-events-none"
                 }`}
               >
-                <div className="px-3 py-2 border-b border-gray-100 dark:border-white/5 mb-1">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                    Active Node
-                  </p>
-                  <p className="text-xs font-bold text-gray-800 dark:text-white truncate mt-0.5">
+                <div className="px-3 py-2 border-b border-gray-300 dark:border-white/5 mb-1 flex gap-5 items-center">
+                  <p className="text-xs font-medium text-gray-800 dark:text-white truncate mt-0.5">
                     {user?.displayName}
                   </p>
+                  {/* Theme Dynamic Controller Button */}
+                  <button
+                    className="block md:hidden p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed transition-all duration-300 cursor-pointer text-sm w-fit mx-auto"
+                    onClick={() => setSwitchTheme(!switchTheme)}
+                  >
+                    {switchTheme ? <IoMdSunny /> : <FaMoon />}
+                  </button>
                 </div>
 
                 <NavLink
@@ -175,17 +197,9 @@ const Navbar = () => {
                   </p>
                 </NavLink>
 
-                {/* Theme Dynamic Controller Button */}
-                <button
-                  className="p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed transition-all duration-300 cursor-pointer text-sm"
-                  onClick={() => setSwitchTheme(!switchTheme)}
-                >
-                  {switchTheme ? <IoMdSunny /> : <FaMoon />}
-                </button>
-
                 <button
                   onClick={logOut}
-                  className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 mt-1 text-xs font-bold uppercase tracking-wider text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 border-t border-gray-50 dark:border-white/5 transition-colors cursor-pointer"
+                  className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 mt-1 text-xs font-bold uppercase tracking-wider text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 border-t border-gray-300 dark:border-white/5 transition-colors cursor-pointer"
                 >
                   <TbLogout2 className="text-sm" />
                   Logout Session

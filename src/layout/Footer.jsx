@@ -105,10 +105,7 @@ const Footer = () => {
       {/* Lower Terminal Block */}
       <div className="border-t border-gray-100 dark:border-white/5 pt-8 mt-4 flex flex-col md:flex-row items-center justify-between w-full max-w-[1400px] mx-auto gap-6">
         {/* Brand Core ( Using root font with clean heavy weights ) */}
-        <a
-          href="/"
-          className="text-xl font-bold tracking-tighter text-gray-900 dark:text-white uppercase"
-        >
+        <a href="/" className="text-xl font-bold tracking-tighter">
           <Logo />
         </a>
 

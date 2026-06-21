@@ -24,10 +24,6 @@ const AllArtifacts = () => {
     fetchaAllArtifacts();
   }, [search]);
 
-  if (loader) {
-    return <Loader />;
-  }
-
   // Orchestrated Layout Variants
   const parentContainer = {
     initial: {},
@@ -93,7 +89,9 @@ const AllArtifacts = () => {
 
       {/* Grid Interface / Empty State Animate Presence */}
 
-      {allArtifacts.length === 0 ? (
+      {loader ? (
+        <Loader />
+      ) : allArtifacts.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
