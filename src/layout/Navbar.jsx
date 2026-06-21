@@ -131,7 +131,7 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           {/* Theme Dynamic Controller Button */}
           <button
-            className="hidden md:block p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed  cursor-pointer text-sm"
+            className="p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed  cursor-pointer text-sm"
             onClick={() => setSwitchTheme(!switchTheme)}
           >
             {switchTheme ? <IoMdSunny /> : <FaMoon />}
@@ -166,24 +166,17 @@ const Navbar = () => {
                     : "scale-95 opacity-0 pointer-events-none"
                 }`}
               >
-                <div className="px-3 py-2 border-b border-gray-300 dark:border-white/5 mb-1 flex gap-5 items-center">
-                  <p className="text-xs font-medium text-gray-800 dark:text-white truncate mt-0.5">
+                <div className="px-3 py-2 border-b border-gray-300 dark:border-white/5 mb-1">
+                  <p className="text-xs font-semibold text-gray-800 dark:text-white truncate mt-0.5">
                     {user?.displayName}
                   </p>
-                  {/* Theme Dynamic Controller Button */}
-                  <button
-                    className="block md:hidden p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed  cursor-pointer text-sm w-fit mx-auto"
-                    onClick={() => setSwitchTheme(!switchTheme)}
-                  >
-                    {switchTheme ? <IoMdSunny /> : <FaMoon />}
-                  </button>
                 </div>
 
                 <NavLink
                   to="/my-artifacts"
                   onClick={() => setAccountMenuOpen(false)}
                 >
-                  <p className="flex items-center px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 hover:text-primaryRed hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-colors">
+                  <p className="flex items-center px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-300 hover:text-primaryRed hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-colors">
                     My Artifacts
                   </p>
                 </NavLink>
@@ -192,7 +185,7 @@ const Navbar = () => {
                   to="/my-liked-artifacts"
                   onClick={() => setAccountMenuOpen(false)}
                 >
-                  <p className="flex items-center px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 hover:text-primaryRed hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-colors">
+                  <p className="flex items-center px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-300 hover:text-primaryRed hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-colors">
                     Liked Core
                   </p>
                 </NavLink>
