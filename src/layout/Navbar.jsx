@@ -115,7 +115,7 @@ const Navbar = () => {
             <NavLink
               to="/add-artifacts"
               className={({ isActive }) =>
-                `px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl transition-all duration-300 ${
+                `px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl  ${
                   isActive
                     ? "bg-white dark:bg-white/10 text-primaryRed shadow-sm"
                     : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
@@ -131,7 +131,7 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           {/* Theme Dynamic Controller Button */}
           <button
-            className="hidden md:block p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed transition-all duration-300 cursor-pointer text-sm"
+            className="hidden md:block p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed  cursor-pointer text-sm"
             onClick={() => setSwitchTheme(!switchTheme)}
           >
             {switchTheme ? <IoMdSunny /> : <FaMoon />}
@@ -141,7 +141,7 @@ const Navbar = () => {
             <div className="relative" ref={dropdownRef}>
               {/* Profile Avatar Trigger Button */}
               <div
-                className="flex items-center gap-2 pl-2 pr-3 py-1.5 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl cursor-pointer select-none group transition-all duration-300 hover:border-primaryRed/30"
+                className="flex items-center gap-2 pl-2 pr-3 py-1.5 bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5 rounded-2xl cursor-pointer select-none group  hover:border-primaryRed/30"
                 onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               >
                 <img
@@ -160,7 +160,7 @@ const Navbar = () => {
 
               {/* Account Floating Flyout Deck */}
               <div
-                className={`absolute top-[60px] right-0 bg-white/95 border border-gray-100 rounded-2xl w-56 p-2 shadow-2xl backdrop-blur-xl dark:bg-[#060911] dark:border-white/10 flex flex-col gap-1 transition-all duration-300 origin-top-right ${
+                className={`absolute top-[60px] right-0 bg-white/95 border border-gray-100 rounded-2xl w-56 p-2 shadow-2xl backdrop-blur-xl dark:bg-[#060911] dark:border-white/10 flex flex-col gap-1  origin-top-right ${
                   accountMenuOpen
                     ? "scale-100 opacity-100 z-50"
                     : "scale-95 opacity-0 pointer-events-none"
@@ -172,7 +172,7 @@ const Navbar = () => {
                   </p>
                   {/* Theme Dynamic Controller Button */}
                   <button
-                    className="block md:hidden p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed transition-all duration-300 cursor-pointer text-sm w-fit mx-auto"
+                    className="block md:hidden p-2.5 rounded-xl border border-gray-200 text-gray-600 bg-gray-100 hover:border-primaryRed hover:text-primaryRed dark:border-white/5 dark:bg-white/5 dark:text-gray-400 dark:hover:border-primaryRed dark:hover:text-primaryRed  cursor-pointer text-sm w-fit mx-auto"
                     onClick={() => setSwitchTheme(!switchTheme)}
                   >
                     {switchTheme ? <IoMdSunny /> : <FaMoon />}
