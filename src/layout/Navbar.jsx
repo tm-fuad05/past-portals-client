@@ -118,7 +118,7 @@ const Navbar = () => {
                 `px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl  ${
                   isActive
                     ? "bg-white dark:bg-white/10 text-primaryRed shadow-sm"
-                    : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 }`
               }
             >
