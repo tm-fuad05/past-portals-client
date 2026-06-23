@@ -13,14 +13,17 @@ import MyArtifacts from "../Pages/MyArtifacts";
 import MyLikedArtifacts from "../Pages/MyLikedArtifacts";
 import AboutUs from "../Pages/AboutUs";
 import ScrollToTop from "./ScrollToTop";
+import ReactLenis from "lenis/react";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <>
-        <ScrollToTop />
-        <Root />
+        <ReactLenis root options={{ lerp: 0.1, duration: 1.5 }}>
+          <ScrollToTop />
+          <Root />
+        </ReactLenis>
       </>
     ),
     children: [
@@ -41,7 +44,7 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) =>
           fetch(
-            `https://pastportals-server.vercel.app/each-artifact-details/${params.id}`
+            `https://pastportals-server.vercel.app/each-artifact-details/${params.id}`,
           ),
       },
       {
@@ -76,7 +79,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: <Auth></Auth>,
+    element: (
+      <ReactLenis root options={{ lerp: 0.1, duration: 1.5 }}>
+        <Auth></Auth>
+      </ReactLenis>
+    ),
     children: [
       {
         path: "/auth/sign-in",

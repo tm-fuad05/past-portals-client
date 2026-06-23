@@ -10,19 +10,43 @@ a.active {
   color: #e94545;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      to bottom,
+      theme("colors.primaryRed"),
+      transparent
+    );
+    border-radius: 2px;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    to bottom,
-    theme("colors.primaryRed"),
-    transparent
-  );
-  border-radius: 2px;
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  scroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }

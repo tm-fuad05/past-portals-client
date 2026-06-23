@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
           .post(
             "https://pastportals-server.vercel.app/logout",
             {},
-            { withCredentials: true }
+            { withCredentials: true },
           )
           .then((res) => {
             setLoader(false);

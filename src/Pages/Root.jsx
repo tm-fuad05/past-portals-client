@@ -4,6 +4,7 @@ import Login from "../Components/Authentication/Login";
 import Navbar from "../layout/Navbar";
 import { Outlet } from "react-router-dom";
 import Footer from "../layout/Footer";
+import ScrollToTop from "../Router/ScrollToTop";
 
 const Root = () => {
   return (
