@@ -9,24 +9,24 @@
 
 ## ✨ Key Features
 
-- **🔐 Dual Authentication & Security**:
+- **Dual Authentication & Security**:
   - Email & Password registration and login with Firebase Authentication.
   - Seamless 1-Click Google Sign-in.
   - JWT token verification and protected private routes.
-- **⚡ Optimistic Heart/Like System**:
+- **Optimistic Heart/Like System**:
   - Real-time like counter with zero perceived latency using custom optimistic state hooks.
-- **🛡️ Schema-First Validation (Zod)**:
+- **Schema-First Validation (Zod)**:
   - Strong, real-time client-side input validation for registration, login, and artifact submissions.
   - Instant UI feedback with granular field-level error messages.
-- **🏛️ Complete Artifact Management (CRUD)**:
+- **Complete Artifact Management (CRUD)**:
   - **Explore**: Browse artifacts with real-time search and category filtering.
   - **Contribute**: Add new artifacts with rich historical chronicles, epochs, and origins.
   - **Manage**: View personalized contributions with inline update modals and interactive delete confirmation.
-- **🎨 Luxury Dark/Light UI Experience**:
+- **Luxury Dark/Light UI Experience**:
   - Smooth scrolling powered by **Lenis**.
   - Fluid micro-interactions and transitions with **Framer Motion**.
   - Interactive carousels, responsive modals, and SweetAlert2 alerts.
-- **📬 Newsletter Integration**:
+- **Newsletter Integration**:
   - Direct transmission pipeline powered by **EmailJS**.
 
 ---
