@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TbLogout2 } from "react-icons/tb";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { IoIosArrowDown, IoMdSunny } from "react-icons/io";
 import { FaMoon } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
-import { Link, NavLink } from "react-router-dom";
-import { AuthContext } from "../AuthProvider/AuthProvider";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "../provider/AuthProvider";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Logo from "../Components/Shared/Logo";
+import Logo from "../components/shared/Logo";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -19,8 +19,8 @@ const Navbar = () => {
   );
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-
-  const { user, signOutUser, loader } = useContext(AuthContext);
+  const { user, signOutUser, loader } = useAuth();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const html = document.documentElement;
@@ -57,24 +57,32 @@ const Navbar = () => {
     };
   }, []);
 
-  const logOut = () => {
-    signOutUser()
-      .then(() => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Signed Out Successfully",
-          showConfirmButton: false,
-          timer: 1200,
-        });
-      })
-      .catch((error) => toast.warn(error?.message || error));
+  const logOut = async () => {
+    try {
+      await signOutUser();
+      await Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Signed Out Successfully",
+        showConfirmButton: false,
+        timer: 1200,
+      });
+    } catch (error) {
+      toast.warn(error?.message || error);
+    }
   };
 
-  const navLinks = [
+  const mainNavLinks = [
     { name: "Home", path: "/" },
-    { name: "All Artifacts", path: "/all-artifacts" },
+    { name: "Artifacts", path: "/artifacts" },
+    { name: "Add Artifact", path: "/add-artifact" },
     { name: "About Us", path: "/about-us" },
+  ];
+
+  const userNavLinks = [
+    { name: "Profile", path: "/profile" },
+    { name: "My Added Artifacts", path: "/my-artifacts" },
+    { name: "My Liked Artifacts", path: "/my-liked-artifacts" },
   ];
 
   return (
@@ -96,35 +104,22 @@ const Navbar = () => {
 
         {/* Center Desktop Navigation Hub */}
         <div className="hidden lg:flex items-center gap-1 bg-gray-100  dark:bg-gray-900/50 p-1.5 rounded-2xl border border-gray-200 dark:border-white/5">
-          {navLinks.map((link, idx) => (
-            <NavLink
-              key={idx}
-              to={link.path}
-              className={({ isActive }) =>
-                `px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl ${
+          {mainNavLinks.map(({ name, path }, idx) => {
+            const isActive = path === pathname;
+            return (
+              <Link
+                key={idx}
+                to={path}
+                className={`px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl ${
                   isActive
                     ? "bg-white dark:bg-white/10 text-primaryRed shadow-sm"
                     : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                }`
-              }
-            >
-              {link.name}
-            </NavLink>
-          ))}
-          {user && (
-            <NavLink
-              to="/add-artifacts"
-              className={({ isActive }) =>
-                `px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-xl  ${
-                  isActive
-                    ? "bg-white dark:bg-white/10 text-primaryRed shadow-sm"
-                    : "text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-                }`
-              }
-            >
-              Add Artifacts
-            </NavLink>
-          )}
+                }`}
+              >
+                {name}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Right Action Terminal Control Panel */}
@@ -159,6 +154,7 @@ const Navbar = () => {
               </div>
 
               {/* Account Floating Flyout Deck */}
+
               <div
                 className={`absolute top-[60px] right-0 bg-white/95 border border-gray-100 rounded-2xl w-56 p-2 shadow-2xl backdrop-blur-xl dark:bg-[#060911] dark:border-white/10 flex flex-col gap-1  origin-top-right ${
                   accountMenuOpen
@@ -172,27 +168,28 @@ const Navbar = () => {
                   </p>
                 </div>
 
-                <NavLink
-                  to="/my-artifacts"
-                  onClick={() => setAccountMenuOpen(false)}
-                >
-                  <p className="flex items-center px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-300 hover:text-primaryRed hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-colors">
-                    My Artifacts
-                  </p>
-                </NavLink>
+                {userNavLinks?.map(({ name, path }) => {
+                  const isActive = path === pathname;
+                  return (
+                    <Link
+                      key={path}
+                      to={path}
+                      onClick={() => setAccountMenuOpen(false)}
+                    >
+                      <p
+                        className={`flex items-center px-3 py-2 text-xs font-bold uppercase tracking-wider hover:text-primaryRed hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-colors ${isActive ? "text-primaryRed bg-gray-100 dark:bg-white/5" : "text-gray-800 dark:text-gray-300"}`}
+                      >
+                        {name}
+                      </p>
+                    </Link>
+                  );
+                })}
 
-                <NavLink
-                  to="/my-liked-artifacts"
-                  onClick={() => setAccountMenuOpen(false)}
-                >
-                  <p className="flex items-center px-3 py-2 text-xs font-bold uppercase tracking-wider text-gray-800 dark:text-gray-300 hover:text-primaryRed hover:bg-gray-50 dark:hover:bg-white/5 rounded-xl transition-colors">
-                    Liked Core
-                  </p>
-                </NavLink>
+                <div className="border-b border-gray-300 dark:border-white/5" />
 
                 <button
                   onClick={logOut}
-                  className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 mt-1 text-xs font-bold uppercase tracking-wider text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 border-t border-gray-300 dark:border-white/5 transition-colors cursor-pointer"
+                  className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 text-xs font-bold uppercase tracking-wider text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 dark:border-white/5 transition-colors cursor-pointer"
                 >
                   <TbLogout2 className="text-sm" />
                   Logout Session
@@ -253,37 +250,23 @@ const Navbar = () => {
 
             {/* Mobile Nav Menu Stack */}
             <div className="flex flex-col gap-2">
-              {navLinks.map((link, idx) => (
-                <NavLink
-                  key={idx}
-                  to={link.path}
-                  onClick={() => setMobileSidebarOpen(false)}
-                  className={({ isActive }) =>
-                    `px-4 py-3 text-xs font-bold uppercase tracking-wider rounded-xl transition-colors ${
+              {mainNavLinks.map(({ name, path }, idx) => {
+                const isActive = path === pathname;
+                return (
+                  <Link
+                    key={idx}
+                    to={path}
+                    onClick={() => setMobileSidebarOpen(false)}
+                    className={`px-4 py-3 text-xs font-bold uppercase tracking-wider rounded-xl transition-colors ${
                       isActive
                         ? "text-primaryRed bg-primaryRed/5 dark:bg-primaryRed/10"
                         : "text-gray-600 dark:text-gray-400 hover:text-primaryRed"
-                    }`
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              ))}
-              {user && (
-                <NavLink
-                  to="/add-artifacts"
-                  onClick={() => setMobileSidebarOpen(false)}
-                  className={({ isActive }) =>
-                    `px-4 py-3 text-xs font-bold uppercase tracking-wider rounded-xl transition-colors ${
-                      isActive
-                        ? "text-primaryRed bg-primaryRed/5 dark:bg-primaryRed/10"
-                        : "text-gray-600 dark:text-gray-400 hover:text-primaryRed"
-                    }`
-                  }
-                >
-                  Add Artifacts
-                </NavLink>
-              )}
+                    }`}
+                  >
+                    {name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 

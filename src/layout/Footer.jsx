@@ -1,8 +1,7 @@
-import React from "react";
 import { CgFacebook } from "react-icons/cg";
 import { BsInstagram, BsLinkedin, BsTwitter } from "react-icons/bs";
 import { FiArrowRight } from "react-icons/fi";
-import Logo from "../Components/Shared/Logo";
+import Logo from "../components/shared/Logo";
 
 const Footer = () => {
   return (
