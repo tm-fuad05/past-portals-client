@@ -91,9 +91,9 @@ const AboutUs = () => {
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[1.1]">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tighter uppercase leading-[1.2]">
               Preserving History, <br />
-              <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
+              <span className="inline-block bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
                 Inspiring Tomorrow
               </span>
             </h1>

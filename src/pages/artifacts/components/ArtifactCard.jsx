@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { BsArrowRight } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { useInstantLike } from "../../../hooks/artifact/useInstantLike";
+import { useInstantLike } from "../../../hooks/useArtifact";
 
 // eslint-disable-next-line react/prop-types
 const ArtifactCard = ({ artifact }) => {

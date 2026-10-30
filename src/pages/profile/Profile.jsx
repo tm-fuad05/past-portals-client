@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../provider/AuthProvider";
-import { useMyAddedArtifacts } from "../../hooks/my-artifacts/useMyAddedArtifact";
+import { useGetMyAddedArtifacts } from "../../hooks/useMyArtifact";
 import Loader from "../../components/shared/Loader";
 import ProfileHeader from "./components/ProfileHeader";
 import ProfileDetails from "./components/ProfileDetails";
@@ -12,16 +12,16 @@ import {
   HiOutlineSparkles,
   HiOutlineArrowRight,
 } from "react-icons/hi2";
-import { useMyLikedArtifacts } from "../../hooks/my-artifacts/useMyLikedArtifacts";
+import { useGetMyLikedArtifacts } from "../../hooks/useMyArtifact";
 
 const Profile = () => {
   const { user, loader, updateUsersProfileInfo, setUser } = useAuth();
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   const { data: myArtifacts, isPending: isMyArtifactsLoading } =
-    useMyAddedArtifacts();
+    useGetMyAddedArtifacts();
 
-  const { data: myLikedArtifacts, isPending } = useMyLikedArtifacts();
+  const { data: myLikedArtifacts, isPending } = useGetMyLikedArtifacts();
 
   if (loader || isMyArtifactsLoading || isPending) {
     return <Loader />;
@@ -39,7 +39,7 @@ const Profile = () => {
         <div>
           <h1 className="text-2xl md:text-4xl font-bold uppercase tracking-tight text-gray-900 dark:text-white">
             Archivist{" "}
-            <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
+            <span className="inline-block bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
               Profile
             </span>
           </h1>

@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import { motion } from "framer-motion";
-import { BiBell } from "react-icons/bi";
 import { BiBell as BiBellIcon } from "react-icons/bi";
 import emailjs from "@emailjs/browser";
 import slider2 from "../../../assets/slider2.jpg";
@@ -123,7 +122,7 @@ const Newsletter = () => {
         <motion.div variants={itemVariants} className="text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-white uppercase tracking-tight">
             Join Our{" "}
-            <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
+            <span className="inline-block bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
               Collection
             </span>
           </h2>

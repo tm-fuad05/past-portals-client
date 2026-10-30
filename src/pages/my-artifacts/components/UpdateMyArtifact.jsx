@@ -1,22 +1,29 @@
+/* eslint-disable no-empty */
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useRef, useState } from "react";
 // Icons
 import {
   HiOutlineDocumentText,
-  HiOutlineLink,
   HiOutlineClock,
   HiOutlineUser,
   HiOutlineMapPin,
   HiOutlineUserCircle,
   HiOutlineEnvelope,
+  HiOutlinePhoto,
+  HiOutlineXMark,
 } from "react-icons/hi2";
 import { HiOutlineCollection } from "react-icons/hi";
 import { useAuth } from "../../../provider/AuthProvider";
-import { useUpdateArtifact } from "../../../hooks/my-artifacts/useUpdateArtifact";
+import { useUpdateArtifact } from "../../../hooks/useMyArtifact";
 import { updateArtifactSchema } from "../../../validation/artifact.validation";
+import { useUploadArtifactImage } from "../../../hooks/useUploadImage";
 
 const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
   const { user } = useAuth();
+  const fileInputRef = useRef();
+  const [previewUrl, setPreviewUrl] = useState(
+    myArtifact?.artifactImage || null,
+  );
   const [error, setError] = useState([]);
   const [formData, setFormData] = useState({
     artifactName: myArtifact?.artifactName || null,
@@ -40,6 +47,23 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
   const locationError = error?.find((err) => err.field === "presentLocation");
   const discoveredByError = error?.find((err) => err.field === "discoveredBy");
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setPreviewUrl(URL.createObjectURL(file));
+    setFormData((prev) => ({ ...prev, artifactImage: file }));
+
+    if (imageError) setError((prev) => [...prev, (imageError.message = "")]);
+  };
+
+  const removeImage = () => {
+    setPreviewUrl(null);
+    setFormData((prev) => ({ ...prev, artifactImage: null }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const changeInputHandler = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -48,8 +72,9 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
   };
 
   const updateMutation = useUpdateArtifact({ myArtifact, modalClose });
+  const uploadMutation = useUploadArtifactImage();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError([]);
     const { data: artifactsData, error: validationError } =
@@ -64,8 +89,20 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
       );
     }
 
-    updateMutation.mutate(artifactsData);
+    try {
+      const { artifactImage } = artifactsData;
+      let photoURL = myArtifact.artifactImage;
+
+      if (artifactImage instanceof File) {
+        const uploadResult = await uploadMutation.mutateAsync(artifactImage);
+        photoURL = uploadResult?.imageUrl;
+      }
+
+      updateMutation.mutate({ ...artifactsData, artifactImage: photoURL });
+    } catch {}
   };
+
+  const isSubmitting = uploadMutation.isPending || updateMutation.isPending;
 
   return (
     <div className="w-full bg-transparent">
@@ -73,7 +110,7 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
       <div className="mb-8">
         <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-gray-900 dark:text-white">
           Update{" "}
-          <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
+          <span className="inline-block bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
             Artifact Details
           </span>
         </h2>
@@ -108,29 +145,6 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
             )}
           </div>
 
-          {/* Artifact Image URL */}
-          <div className="space-y-1.5">
-            <label className="text-[11px] font-black uppercase tracking-wider text-gray-600 dark:text-gray-400 pl-1">
-              Artifact Image (URL)
-            </label>
-            <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50 transition-all duration-300 group">
-              <HiOutlineLink className="text-gray-600 dark:text-gray-400 group-focus-within:text-primaryRed text-lg mr-3 transition-colors" />
-              <input
-                type="url"
-                name="artifactImage"
-                value={formData.artifactImage}
-                onChange={changeInputHandler}
-                className="w-full bg-transparent text-sm font-medium text-gray-900 dark:text-white placeholder:text-gray-600 dark:text-gray-400 focus:outline-none"
-                placeholder="https://example.com/image.jpg"
-              />
-            </div>
-            {imageError?.message && (
-              <small className="text-xs text-red-500 pt-1 pl-1">
-                {imageError.message}
-              </small>
-            )}
-          </div>
-
           {/* Artifact Type */}
           <div className="space-y-1.5">
             <label className="text-[11px] font-black uppercase tracking-wider text-gray-600 dark:text-gray-400 pl-1">
@@ -159,7 +173,62 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
               </small>
             )}
           </div>
+        </div>
 
+        {/* Image Upload with Preview */}
+        <div className="space-y-1.5">
+          <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 pl-1">
+            Artifact Image
+          </label>
+
+          {previewUrl ? (
+            <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 bg-slate-950/10 shadow-lg group/preview transition-all duration-300">
+              <img
+                src={previewUrl}
+                alt="Artifact Preview"
+                className="w-full h-full object-contain transition-transform duration-500 group-hover/preview:scale-105"
+              />
+              <button
+                type="button"
+                onClick={removeImage}
+                className="absolute top-3 right-3 p-2 bg-black/60 hover:bg-primaryRed text-white rounded-full backdrop-blur-md transition-all shadow-md active:scale-95"
+                title="Remove image"
+              >
+                <HiOutlineXMark className="text-lg" />
+              </button>
+            </div>
+          ) : (
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-white/10 hover:border-primaryRed/50 rounded-2xl p-8 cursor-pointer bg-gray-50/50 dark:bg-white/5 transition-all group"
+            >
+              <HiOutlinePhoto className="text-4xl text-gray-400 group-hover:text-primaryRed transition-colors mb-2" />
+              <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Click to upload artifact photo
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                PNG, JPG, WEBP up to 5MB
+              </p>
+            </div>
+          )}
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+
+          {imageError?.message && (
+            <small className="text-xs text-red-500 pt-1 pl-1">
+              {imageError.message}
+            </small>
+          )}
+        </div>
+
+        {/* Additional Details Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Created At */}
           <div className="space-y-1.5">
             <label className="text-[11px] font-black uppercase tracking-wider text-gray-600 dark:text-gray-400 pl-1">
@@ -307,9 +376,10 @@ const UpdateMyArtifact = ({ myArtifact, modalClose }) => {
         <div className="pt-2">
           <button
             type="submit"
-            className="w-full py-3.5 rounded-xl bg-gradient-to-r from-redStart to-redEnd text-white font-black text-xs uppercase tracking-widest shadow-xl shadow-redStart/10 hover:shadow-redStart/20 active:scale-[0.99] transition-all duration-200"
+            disabled={isSubmitting}
+            className="w-full py-3.5 bg-gradient-to-r from-primaryRed to-darkRed text-white font-bold text-sm uppercase tracking-wider rounded-xl hover:opacity-95 shadow-lg shadow-primaryRed/10 active:scale-[0.99] transition-all disabled:opacity-50"
           >
-            Save Modified Changes
+            {isSubmitting ? "Updating..." : "Update"}
           </button>
         </div>
       </form>

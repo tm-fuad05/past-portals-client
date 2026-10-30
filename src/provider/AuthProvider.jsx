@@ -11,7 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
-import { axiosPublic } from "../hooks/axios/axiosPublic";
+import { axiosPublic } from "../hooks/useAxios";
 
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {

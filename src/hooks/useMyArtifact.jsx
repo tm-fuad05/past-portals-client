@@ -1,7 +1,45 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxiosSecure from "../axios/useAxiosSecure";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useAxiosSecure } from "./useAxios";
+import { useAuth } from "../provider/AuthProvider";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 
+// Get My added Artifacts
+export function useGetMyAddedArtifacts() {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { data, isPending } = useQuery({
+    queryKey: ["artifacts", "my-added-artifacts", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/artifacts/my-artifacts?email=${user?.email}`,
+      );
+      return res.data.data;
+    },
+    enabled: !!user?.email,
+  });
+  return { data, isPending };
+}
+
+// Get my liked artifacts
+export function useGetMyLikedArtifacts() {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const { data, isPending } = useQuery({
+    queryKey: ["artifacts", "liked-count", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/liked-artifacts/my-liked-artifacts?email=${user?.email}`,
+      );
+      return res.data.data;
+    },
+    enabled: !!user?.email,
+  });
+
+  return { data, isPending };
+}
+
+// Update my added artifacts
 export function useUpdateArtifact({ myArtifact, modalClose }) {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();

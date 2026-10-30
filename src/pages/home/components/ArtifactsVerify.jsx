@@ -63,7 +63,7 @@ const ArtifactsVerify = () => {
 
           <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white uppercase tracking-tight leading-tight">
             Artifacts{" "}
-            <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent block md:inline">
+            <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent block md:inline-block">
               Verify
             </span>
           </h1>

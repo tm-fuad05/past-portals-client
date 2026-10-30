@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../provider/AuthProvider";
 import MyLikedArtifactCard from "./components/MyLikedArtifactCard";
 import empty from "../../assets/empty.jpg";
-import useAxiosSecure from "../../hooks/axios/useAxiosSecure";
-import Loader from "../../components/shared/Loader";
+import { useAxiosSecure } from "../../hooks/useAxios";
+import CardSkelton from "../../components/shared/CardSkelton";
 import { motion } from "framer-motion";
 
 const MyLikedArtifacts = () => {
@@ -61,7 +61,7 @@ const MyLikedArtifacts = () => {
         <div>
           <h2 className="text-2xl md:text-4xl font-bold uppercase tracking-tight text-gray-900 dark:text-white">
             Bookmarked{" "}
-            <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
+            <span className="inline-block bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
               Nodes
             </span>
           </h2>
@@ -79,7 +79,7 @@ const MyLikedArtifacts = () => {
 
       {/* Grid Layout & Empty States Animate Handler */}
       {loader ? (
-        <Loader />
+        <CardSkelton count={4} variant="list" />
       ) : myLikedArtifacts.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}

@@ -10,15 +10,13 @@ import {
   HiOutlineMapPin,
   HiOutlineDocumentText,
 } from "react-icons/hi2";
-
-import { useArtifactById } from "../../hooks/artifact/useArtifactById";
 import { useParams } from "react-router-dom";
 import Loader from "../../components/shared/Loader";
-import { useInstantLike } from "../../hooks/artifact/useInstantLike";
+import { useInstantLike, useGetArtifactById } from "../../hooks/useArtifact";
 
 const ArtifactDetails = () => {
   const { id } = useParams();
-  const { data: artifact, isPending } = useArtifactById(id);
+  const { data: artifact, isPending } = useGetArtifactById(id);
   const { handleLike, isLiked, likesCount } = useInstantLike(artifact);
 
   if (isPending) {

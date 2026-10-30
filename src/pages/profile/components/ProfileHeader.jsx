@@ -28,10 +28,10 @@ const ProfileHeader = ({ user, addedCount, likedCount, onEditClick }) => {
             <img
               src={
                 user?.photoURL ||
-                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+                "https://static.vecteezy.com/system/resources/thumbnails/005/194/102/small/user-icon-flat-design-isolated-on-white-background-free-vector.jpg"
               }
               alt={user?.displayName || "User Avatar"}
-              className="relative w-24 h-24 md:w-28 md:h-28 rounded-2xl object-cover ring-4 ring-white dark:ring-[#0d131f] shadow-lg"
+              className="relative w-24 h-24 md:w-28 md:h-28 rounded-2xl object-cover ring-4 ring-white dark:ring-[#0d131f] shadow-lg pointer-events-none"
             />
             {user?.emailVerified && (
               <span
@@ -46,7 +46,7 @@ const ProfileHeader = ({ user, addedCount, likedCount, onEditClick }) => {
           <div>
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
               <h1 className="text-2xl md:text-3xl font-bold uppercase tracking-tight text-gray-900 dark:text-white">
-                {user?.displayName || "Anonymous Explorer"}
+                {user?.displayName}
               </h1>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-primaryRed/10 text-primaryRed border border-primaryRed/20">
                 Archivist

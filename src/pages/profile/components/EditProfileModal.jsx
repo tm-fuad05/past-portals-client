@@ -1,20 +1,73 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiOutlineXMark, HiOutlineUser, HiOutlinePhoto } from "react-icons/hi2";
 import Swal from "sweetalert2";
+import { profileSchema } from "../../../validation/profile.validation";
+import { useUploadUserImage } from "../../../hooks/useUploadImage";
 
-const EditProfileModal = ({ isOpen, onClose, user, updateUsersProfileInfo, setUser }) => {
-  const [displayName, setDisplayName] = useState(user?.displayName || "");
-  const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
+const EditProfileModal = ({
+  isOpen,
+  onClose,
+  user,
+  updateUsersProfileInfo,
+  setUser,
+}) => {
+  const [formData, setFormData] = useState({
+    name: user?.displayName,
+    photo: user?.photoURL || null,
+  });
+  console.log(user.photoURL);
+  const [imagePreview, setImagePreview] = useState();
+  const [error, setError] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const userUploadMutation = useUploadUserImage();
+
+  //Errors
+  const nameError = error?.find((err) => err.field === "name");
+  const photoError = error?.find((err) => err.field === "photo");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImagePreview(URL.createObjectURL(file));
+    setFormData((prev) => ({ ...prev, photo: file }));
+
+    if (photoError) setError((prev) => [...prev, (photoError.message = "")]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setError([]);
+
+    const { data: profileData, error: validationError } =
+      profileSchema.safeParse(formData);
+
+    if (validationError) {
+      return setError(
+        validationError?.issues?.map((err) => ({
+          field: err?.path[0],
+          message: err?.message,
+        })),
+      );
+    }
+
+    const { name, photo } = profileData;
+
+    let photoURL = user?.photoURL || "";
+    try {
+      if (photo instanceof File) {
+        const uploadResult = await userUploadMutation.mutateAsync(photo);
+        photoURL = uploadResult?.imageUrl;
+      }
+    } catch {
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       await updateUsersProfileInfo({
-        displayName: displayName.trim(),
+        displayName: name.trim(),
         photoURL: photoURL.trim(),
       });
 
@@ -22,7 +75,7 @@ const EditProfileModal = ({ isOpen, onClose, user, updateUsersProfileInfo, setUs
       if (setUser) {
         setUser((prev) => ({
           ...prev,
-          displayName: displayName.trim(),
+          displayName: name.trim(),
           photoURL: photoURL.trim(),
         }));
       }
@@ -30,7 +83,6 @@ const EditProfileModal = ({ isOpen, onClose, user, updateUsersProfileInfo, setUs
       Swal.fire({
         icon: "success",
         title: "Profile Updated",
-        text: "Your profile information has been successfully synced.",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -83,7 +135,7 @@ const EditProfileModal = ({ isOpen, onClose, user, updateUsersProfileInfo, setUs
             {/* Display Name Input */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5">
-                Archivist Name
+                Name
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
@@ -91,56 +143,61 @@ const EditProfileModal = ({ isOpen, onClose, user, updateUsersProfileInfo, setUs
                 </span>
                 <input
                   type="text"
-                  required
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
+                  name="name"
+                  value={formData.name}
+                  onChange={(e) => {
+                    setFormData((prev) => ({ ...prev, name: e.target.value }));
+                    if (nameError)
+                      setError((prev) => [...prev, (nameError.message = "")]);
+                  }}
                   placeholder="Enter your name"
                   className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:border-primaryRed focus:outline-none text-sm text-gray-900 dark:text-white placeholder-gray-400"
                 />
               </div>
+              {nameError?.message && (
+                <small className="text-xs text-red-500 pt-1 pl-1">
+                  {nameError.message}
+                </small>
+              )}
             </div>
 
-            {/* Photo URL Input */}
+            {/* Profile Photo File Upload Input */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5">
-                Avatar Image URL
+                Profile Photo
               </label>
-              <div className="relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
-                  <HiOutlinePhoto className="text-lg" />
-                </span>
-                <input
-                  type="url"
-                  required
-                  value={photoURL}
-                  onChange={(e) => setPhotoURL(e.target.value)}
-                  placeholder="https://example.com/avatar.jpg"
-                  className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 focus:border-primaryRed focus:outline-none text-sm text-gray-900 dark:text-white placeholder-gray-400"
-                />
-              </div>
-            </div>
+              <div className="flex items-center gap-3">
+                {/* Preview Avatar */}
+                <div className="relative w-12 h-12 rounded-2xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+                  {imagePreview ? (
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : formData?.photo ? (
+                    <img
+                      src={formData.photo}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <HiOutlinePhoto className="text-gray-400 text-xl" />
+                  )}
+                </div>
 
-            {/* Photo Preview */}
-            {photoURL && (
-              <div className="flex items-center gap-3 p-3 rounded-2xl bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/5">
-                <img
-                  src={photoURL}
-                  alt="Preview"
-                  onError={(e) => {
-                    e.target.src = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80";
-                  }}
-                  className="w-10 h-10 rounded-xl object-cover ring-2 ring-primaryRed/30"
-                />
-                <div className="text-xs">
-                  <p className="font-semibold text-gray-800 dark:text-gray-200">
-                    Live Preview
-                  </p>
-                  <p className="text-gray-400 truncate max-w-[220px]">
-                    {photoURL}
-                  </p>
+                {/* File Input Field */}
+                <div className="relative flex-1 flex items-center bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl px-3 py-2.5 focus-within:border-primaryRed transition-all">
+                  <input
+                    type="file"
+                    name="photo"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="w-full bg-transparent text-xs font-medium text-gray-500 dark:text-gray-400 file:mr-3 file:py-1 file:px-2.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-primaryRed/10 file:text-primaryRed hover:file:bg-primaryRed hover:file:text-white file:transition-colors file:cursor-pointer cursor-pointer focus:outline-none"
+                  />
                 </div>
               </div>
-            )}
+            </div>
 
             {/* Action Buttons */}
             <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100 dark:border-white/10">
@@ -156,7 +213,7 @@ const EditProfileModal = ({ isOpen, onClose, user, updateUsersProfileInfo, setUs
                 disabled={isSubmitting}
                 className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-redStart to-redEnd text-white font-semibold text-xs uppercase tracking-wider shadow-lg shadow-primaryRed/20 hover:shadow-primaryRed/40 disabled:opacity-50 cursor-pointer transition-all"
               >
-                {isSubmitting ? "Syncing..." : "Save Changes"}
+                {isSubmitting ? "Updating..." : "Save Changes"}
               </button>
             </div>
           </form>

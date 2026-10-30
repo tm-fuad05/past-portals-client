@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
 import {
   HiOutlineUser,
@@ -35,7 +36,9 @@ const ProfileDetails = ({ user }) => {
       icon: <HiOutlineShieldCheck className="text-lg text-emerald-500" />,
       label: "Email Status",
       value: user?.emailVerified ? "Verified Account" : "Unverified Account",
-      badge: user?.emailVerified ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500",
+      badge: user?.emailVerified
+        ? "bg-emerald-500/10 text-emerald-500"
+        : "bg-amber-500/10 text-amber-500",
     },
     {
       icon: <HiOutlineFingerPrint className="text-lg text-purple-500" />,
@@ -56,7 +59,10 @@ const ProfileDetails = ({ user }) => {
     {
       icon: <HiOutlineGlobeAlt className="text-lg text-cyan-500" />,
       label: "Sign-In Method",
-      value: user?.providerData?.[0]?.providerId === "google.com" ? "Google Authentication" : "Email & Password",
+      value:
+        user?.providerData?.[0]?.providerId === "google.com"
+          ? "Google Authentication"
+          : "Email & Password",
     },
   ];
 
@@ -97,13 +103,17 @@ const ProfileDetails = ({ user }) => {
               <div className="flex items-center gap-2 flex-wrap">
                 <p
                   className={`text-sm font-semibold text-gray-800 dark:text-gray-100 truncate ${
-                    item.isMono ? "font-mono text-xs text-gray-500 dark:text-gray-400" : ""
+                    item.isMono
+                      ? "font-mono text-xs text-gray-500 dark:text-gray-400"
+                      : ""
                   }`}
                 >
                   {item.value}
                 </p>
                 {item.badge && (
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${item.badge}`}>
+                  <span
+                    className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${item.badge}`}
+                  >
                     {user?.emailVerified ? "Verified" : "Pending"}
                   </span>
                 )}

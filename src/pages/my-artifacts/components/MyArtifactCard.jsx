@@ -15,12 +15,10 @@ import {
   HiOutlineUser,
   HiOutlineCalendar,
 } from "react-icons/hi2";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/axios/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
+import { useDeleteArtifact } from "../../../hooks/useArtifact";
 
 const MyArtifactCard = ({ myArtifact }) => {
-  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const {
@@ -34,24 +32,7 @@ const MyArtifactCard = ({ myArtifact }) => {
     presentLocation,
   } = myArtifact;
 
-  const queryClient = useQueryClient();
-  const deleteMutation = useMutation({
-    mutationFn: async (id) => {
-      const res = await axiosSecure.delete(`/artifacts/${id}`);
-      return res.data;
-    },
-    onSuccess: async (data) => {
-      if (data?.success) {
-        await Swal.fire({
-          title: data?.message,
-          icon: "success",
-          timer: 1000,
-          showConfirmButton: false,
-        });
-        queryClient.invalidateQueries({ queryKey: ["artifacts"] });
-      }
-    },
-  });
+  const deleteMutation = useDeleteArtifact();
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -73,7 +54,7 @@ const MyArtifactCard = ({ myArtifact }) => {
       {/* Image Exhibition Section */}
       <div
         onClick={() => navigate(`/artifacts/${artifactName}/${_id}`)}
-        className="relative h-56 w-full overflow-hidden bg-gray-100 dark:bg-slate-900  cursor-pointer"
+        className="relative w-full h-80 md:h-72 overflow-hidden bg-gray-100 dark:bg-slate-900  cursor-pointer"
       >
         <img
           src={artifactImage}

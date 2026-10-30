@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -33,13 +34,16 @@ const Login = () => {
   const changeInputHandler = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: (value.length > 0 && value) || null,
+    }));
 
     const fieldError = error?.find((err) => err.field === name);
     if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError([]);
 
@@ -57,21 +61,19 @@ const Login = () => {
 
     const { email, password } = signInData;
 
-    signInUser(email, password)
-      .then((result) => {
-        setUser(result.user);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Successfully Signed In",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-        setTimeout(() => {
-          navigate(location?.state ? location.state : "/");
-        }, 1200);
-      })
-      .catch(() => setAuthError("Invalid email or password"));
+    try {
+      await signInUser(email, password);
+      await Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Successfully Signed In",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      navigate(location?.state ? location.state : "/");
+    } catch (error) {
+      return setAuthError("Invalid email or password");
+    }
   };
 
   return (
@@ -91,7 +93,7 @@ const Login = () => {
           <div className="space-y-1 mb-6 text-center md:text-left">
             <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white uppercase">
               Welcome{" "}
-              <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
+              <span className="inline-block bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
                 Back
               </span>
             </h2>
@@ -111,7 +113,7 @@ const Login = () => {
                 <input
                   type="email"
                   name="email"
-                  onChange={(e) => changeInputHandler(e)}
+                  onChange={changeInputHandler}
                   placeholder="name@domain.com"
                   className="w-full bg-transparent text-sm font-medium text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none"
                 />
@@ -138,7 +140,7 @@ const Login = () => {
                 <input
                   type={show ? "text" : "password"}
                   name="password"
-                  onChange={(e) => changeInputHandler(e)}
+                  onChange={changeInputHandler}
                   placeholder="••••••••"
                   className="w-full bg-transparent text-sm font-medium text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none pr-8"
                 />

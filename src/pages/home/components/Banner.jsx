@@ -113,7 +113,7 @@ const Banner = () => {
                     {/* Main Heading Matrix */}
                     <motion.h1
                       variants={textNodeFade}
-                      className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tighter uppercase"
+                      className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.15] tracking-tighter uppercase"
                     >
                       {slide.titleStart}{" "}
                       <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent block mt-1">

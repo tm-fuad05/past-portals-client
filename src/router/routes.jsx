@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../layout/Root";
-import Auth from "../pages/authentication/Auth";
-import Login from "../pages/authentication/Login";
-import Register from "../pages/authentication/Register";
+import Auth from "../pages/auth/Auth";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
 import Home from "../pages/home/Home";
 import AllArtifacts from "../pages/artifacts/AllArtifacts";
 import AddArtifacts from "../pages/artifacts/AddArtifacts";
-import PrivateLayout from "../private-layout/PrivateLayout";
+import PrivateLayout from "../layout/PrivateLayout";
 import ArtifactDetails from "../pages/artifacts/ArtifactDetails";
 import ErrorPage from "../pages/error/ErrorPage";
 import MyArtifacts from "../pages/my-artifacts/MyArtifacts";

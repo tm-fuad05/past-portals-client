@@ -16,7 +16,7 @@ const MuseumInfo = () => {
               </span>
             </div>
             <h1 className="text-xl lg:text-2xl font-bold  text-gray-900 dark:text-white leading-snug uppercase">
-              The World's Leading Museum of{" "}
+              The World&apos;s Leading Museum of{" "}
               <span className="text-primaryRed">History</span> & Culture.
             </h1>
           </div>

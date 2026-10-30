@@ -1,22 +1,26 @@
 // Icons
 import {
   HiOutlineIdentification,
-  HiOutlineLink,
   HiOutlineTag,
   HiOutlineDocumentText,
   HiOutlineCalendar,
   HiOutlineUser,
   HiOutlineMapPin,
+  HiOutlinePhoto,
+  HiOutlineXMark,
 } from "react-icons/hi2";
 import { useRef, useState } from "react";
 import { useAuth } from "../../provider/AuthProvider";
-import { useAddArtifact } from "../../hooks/artifact/useAddArtifact";
+import { useAddArtifact } from "../../hooks/useArtifact";
 import { createArtifactSchema } from "../../validation/artifact.validation";
+import { useUploadArtifactImage } from "../../hooks/useUploadImage";
 
 const AddArtifacts = () => {
   const { user } = useAuth();
   const formRef = useRef();
-  const [error, setError] = useState();
+  const fileInputRef = useRef();
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [error, setError] = useState([]);
 
   const nameError = error?.find((err) => err.field === "artifactName");
   const imageError = error?.find((err) => err.field === "artifactImage");
@@ -29,7 +33,8 @@ const AddArtifacts = () => {
   const locationError = error?.find((err) => err.field === "presentLocation");
   const discoveredByError = error?.find((err) => err.field === "discoveredBy");
 
-  const postMutation = useAddArtifact(formRef);
+  const postMutation = useAddArtifact(formRef, setPreviewUrl);
+  const uploadMutation = useUploadArtifactImage();
 
   const [formData, setFormData] = useState({
     artifactName: null,
@@ -44,16 +49,38 @@ const AddArtifacts = () => {
     artifactAdderEmail: user?.email,
   });
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPreviewUrl(URL.createObjectURL(file));
+      setFormData((prev) => ({ ...prev, artifactImage: file }));
+
+      if (imageError) setError((prev) => [...prev, (imageError.message = "")]);
+    }
+  };
+
+  const removeImage = () => {
+    setPreviewUrl(null);
+    setFormData((prev) => ({ ...prev, artifactImage: null }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    uploadMutation.reset();
+  };
+
   const changeInputHandler = (e) => {
     const { name, value } = e.target;
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: (value.length > 0 && value) || null,
+    }));
 
     const fieldError = error?.find((err) => err.field === name);
     if (fieldError) setError((prev) => [...prev, (fieldError.message = "")]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError([]);
 
@@ -69,8 +96,22 @@ const AddArtifacts = () => {
       );
     }
 
-    postMutation.mutate(artifactsData);
+    try {
+      const image = artifactsData.artifactImage;
+      if (!image) return;
+
+      const uploadResult = await uploadMutation.mutateAsync(image);
+
+      postMutation.mutate({
+        ...artifactsData,
+        artifactImage: uploadResult.imageUrl,
+      });
+    } catch (err) {
+      console.error("Artifact upload failed:", err);
+    }
   };
+
+  const isSubmitting = postMutation.isPending || uploadMutation.isPending;
 
   return (
     <div className="min-h-screen w-full bg-gray-50 dark:bg-transparent flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 py-12 relative overflow-hidden">
@@ -80,7 +121,7 @@ const AddArtifacts = () => {
 
       <div className="w-full max-w-3xl relative z-10 space-y-6">
         {/* Core Terminal Form Shell */}
-        <div className="bg-white border border-gray-200/60 dark:bg-slate-900/40  dark:border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-gray-200/50 dark:shadow-none backdrop-blur-xl">
+        <div className="bg-white border border-gray-200/60 dark:bg-slate-900/40 dark:border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl shadow-gray-200/50 dark:shadow-none backdrop-blur-xl">
           {/* Header Dashboard Info */}
           <div className="space-y-1 mb-8 border-b border-gray-100 dark:border-white/5 pb-5 text-center sm:text-left">
             <h2 className="text-2xl font-black tracking-tight text-gray-900 dark:text-white uppercase">
@@ -122,7 +163,7 @@ const AddArtifacts = () => {
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 pl-1">
                   Artifact Type
                 </label>
-                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50  group">
+                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50 group">
                   <HiOutlineTag className="text-gray-400 group-focus-within:text-primaryRed text-base mr-3" />
                   <select
                     name="artifactType"
@@ -147,21 +188,51 @@ const AddArtifacts = () => {
               </div>
             </div>
 
-            {/* Row 2: Image Input */}
+            {/* Row 2: Image Upload with Preview */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 pl-1">
-                Artifact Image (URL)
+                Artifact Image
               </label>
-              <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50  group">
-                <HiOutlineLink className="text-gray-400 group-focus-within:text-primaryRed text-base mr-3" />
-                <input
-                  type="url"
-                  name="artifactImage"
-                  onChange={(e) => changeInputHandler(e)}
-                  placeholder="https://domain.com/secure-vault-image.jpg"
-                  className="w-full bg-transparent text-sm font-medium text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none"
-                />
-              </div>
+
+              {previewUrl ? (
+                <div className="relative w-full h-64 sm:h-72 rounded-2xl overflow-hidden border border-gray-200 dark:border-white/10 bg-slate-950/10 shadow-lg group/preview transition-all duration-300">
+                  <img
+                    src={previewUrl}
+                    alt="Artifact Preview"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover/preview:scale-105"
+                  />
+                  <button
+                    type="button"
+                    onClick={removeImage}
+                    className="absolute top-3 right-3 p-2 bg-black/60 hover:bg-primaryRed text-white rounded-full backdrop-blur-md transition-all shadow-md active:scale-95"
+                    title="Remove image"
+                  >
+                    <HiOutlineXMark className="text-lg" />
+                  </button>
+                </div>
+              ) : (
+                <div
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-white/10 hover:border-primaryRed/50 rounded-2xl p-8 cursor-pointer bg-gray-50/50 dark:bg-white/5 transition-all group"
+                >
+                  <HiOutlinePhoto className="text-4xl text-gray-400 group-hover:text-primaryRed transition-colors mb-2" />
+                  <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    Click to upload artifact photo
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    PNG, JPG, WEBP up to 5MB
+                  </p>
+                </div>
+              )}
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="hidden"
+              />
+
               {imageError?.message && (
                 <small className="text-xs text-red-500 pt-1 pl-1">
                   {imageError.message}
@@ -174,15 +245,15 @@ const AddArtifacts = () => {
               <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 pl-1">
                 Historical Context Description
               </label>
-              <div className="relative flex bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50  group">
+              <div className="relative flex bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50 group">
                 <HiOutlineDocumentText className="text-gray-400 group-focus-within:text-primaryRed text-base mr-3 mt-0.5" />
                 <textarea
                   name="historicalContext"
                   onChange={(e) => changeInputHandler(e)}
-                  placeholder="Describe the historical era, significance, and ancestral trajectory..."
                   rows="4"
+                  placeholder="Provide deep chronological provenance, discovery narratives, and cultural relevance..."
                   className="w-full bg-transparent text-sm font-medium text-gray-900 dark:text-white placeholder:text-gray-400 focus:outline-none resize-none"
-                ></textarea>
+                />
               </div>
               {contextError?.message && (
                 <small className="text-xs text-red-500 pt-1 pl-1">
@@ -197,7 +268,7 @@ const AddArtifacts = () => {
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 pl-1">
                   Epoch Origin (Created At)
                 </label>
-                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50  group">
+                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50 group">
                   <HiOutlineCalendar className="text-gray-400 group-focus-within:text-primaryRed text-base mr-3" />
                   <input
                     type="text"
@@ -218,7 +289,7 @@ const AddArtifacts = () => {
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 pl-1">
                   Discovery Timestamp
                 </label>
-                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50  group">
+                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50 group">
                   <HiOutlineCalendar className="text-gray-400 group-focus-within:text-primaryRed text-base mr-3" />
                   <input
                     type="text"
@@ -242,7 +313,7 @@ const AddArtifacts = () => {
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 pl-1">
                   Discovered By
                 </label>
-                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50  group">
+                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50 group">
                   <HiOutlineUser className="text-gray-400 group-focus-within:text-primaryRed text-base mr-3" />
                   <input
                     type="text"
@@ -263,7 +334,7 @@ const AddArtifacts = () => {
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-700 dark:text-gray-400 pl-1">
                   Present Location
                 </label>
-                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50  group">
+                <div className="relative flex items-center bg-gray-50/50 border border-gray-200 dark:bg-white/5 dark:border-white/5 rounded-xl px-4 py-3 focus-within:border-primaryRed/50 group">
                   <HiOutlineMapPin className="text-gray-400 group-focus-within:text-primaryRed text-base mr-3" />
                   <input
                     type="text"
@@ -318,10 +389,10 @@ const AddArtifacts = () => {
             <div className="pt-3">
               <button
                 type="submit"
-                disabled={postMutation.isPending}
+                disabled={isSubmitting}
                 className="w-full py-3.5 bg-gradient-to-r from-primaryRed to-darkRed text-white font-bold text-sm uppercase tracking-wider rounded-xl hover:opacity-95 shadow-lg shadow-primaryRed/10 active:scale-[0.99] transition-all disabled:opacity-50"
               >
-                {postMutation.isPending ? "Pending..." : "Add Artifact"}
+                {isSubmitting ? "Processing..." : "Add Artifact"}
               </button>
             </div>
           </form>

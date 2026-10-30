@@ -5,7 +5,9 @@ export const createArtifactSchema = z.object({
     .string({ error: "Artifact name is required " })
     .trim()
     .min(2, { error: "Name must be at least 2 characters" }),
-  artifactImage: z.string({ error: "Image is required" }),
+  artifactImage: z
+    .instanceof(File, { message: "Image is required" })
+    .optional(),
   artifactType: z.string({ error: "Artifact type is required" }),
   historicalContext: z
     .string({ error: "Historical Context is required" })
@@ -26,4 +28,6 @@ export const createArtifactSchema = z.object({
   likedBy: z.array(z.email({ error: "Invalid email" }).trim()).default([]),
 });
 
-export const updateArtifactSchema = createArtifactSchema.partial();
+export const updateArtifactSchema = createArtifactSchema.partial().extend({
+  artifactImage: z.union([z.instanceof(File), z.url()]).optional(),
+});

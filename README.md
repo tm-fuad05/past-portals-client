@@ -59,7 +59,7 @@ src/
 ├── assets/                 # Static images, sliders, and graphics
 ├── components/             # Reusable shared components (Navbar, Footer, Modals, SocialLogin)
 ├── hooks/
-│   ├── artifact/           # React Query hooks (useAllArtifact, useAddArtifact, useInstantLike)
+│   ├── artifact/           # React Query hooks (useGetAllArtifact, useAddArtifact, useInstantLike)
 │   ├── axios/              # Axios instance and secure interceptors (useAxiosSecure)
 │   └── my-artifacts/       # User-specific artifact mutations (useUpdateArtifact, useMyAddedArtifact)
 ├── layouts/                # Main and root layout structures

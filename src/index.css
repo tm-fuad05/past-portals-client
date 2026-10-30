@@ -6,6 +6,20 @@ body {
   overflow-x: hidden;
 }
 
+/* Prevent top/bottom glyph clipping on gradient text (especially uppercase / Aldrich font) */
+.bg-clip-text {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding-top: 0.18em;
+  padding-bottom: 0.08em;
+  margin-top: -0.18em;
+  margin-bottom: -0.08em;
+}
+
+span.bg-clip-text:not(.block) {
+  display: inline-block;
+}
+
 a.active {
   color: #e94545;
 }

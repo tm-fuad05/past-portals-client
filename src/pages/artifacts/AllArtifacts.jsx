@@ -3,31 +3,14 @@ import { motion } from "framer-motion";
 import { FiSearch } from "react-icons/fi";
 import ArtifactCard from "./components/ArtifactCard";
 import empty from "../../assets/empty.jpg";
-import Loader from "../../components/shared/Loader";
-import { useAllArtifact } from "../../hooks/artifact/useAllArtifact";
+import CardSkelton from "../../components/shared/CardSkelton";
+import { useGetAllArtifact } from "../../hooks/useArtifact";
+import { MotionAnimation } from "../../animation/motion.animation";
 
 const AllArtifacts = () => {
   const [search, setSearch] = useState("");
 
-  const { data: artifacts, isPending } = useAllArtifact(search);
-
-  // Orchestrated Layout Variants
-  const parentContainer = {
-    initial: {},
-    animate: {
-      transition: { staggerChildren: 0.05 },
-    },
-  };
-
-  const cardNode = {
-    initial: { opacity: 0, y: 30, scale: 0.98 },
-    animate: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-    },
-  };
+  const { data: artifacts, isPending } = useGetAllArtifact(search);
 
   return (
     <div className="w-11/12 mx-auto py-12">
@@ -60,7 +43,7 @@ const AllArtifacts = () => {
         <div>
           <h2 className="text-2xl md:text-4xl font-bold uppercase tracking-tight text-gray-900 dark:text-white">
             Registry{" "}
-            <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
+            <span className="inline-block bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
               Index
             </span>
           </h2>
@@ -79,7 +62,7 @@ const AllArtifacts = () => {
       {/* Grid Interface / Empty State Animate Presence */}
 
       {isPending ? (
-        <Loader />
+        <CardSkelton count={6} />
       ) : artifacts?.length === 0 ? (
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -103,13 +86,13 @@ const AllArtifacts = () => {
       ) : (
         <motion.div
           key={search}
-          variants={parentContainer}
+          variants={MotionAnimation.parentContainer}
           initial="initial"
           animate="animate"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 w-full"
         >
           {artifacts?.map((artifact) => (
-            <motion.div key={artifact?._id || artifact?.id} variants={cardNode}>
+            <motion.div key={artifact?._id} variants={MotionAnimation.cardNode}>
               <ArtifactCard artifact={artifact} />
             </motion.div>
           ))}

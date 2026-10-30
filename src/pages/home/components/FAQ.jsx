@@ -72,7 +72,7 @@ const FAQ = () => {
         </div>
         <h3 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white uppercase tracking-tight">
           Additional{" "}
-          <span className="bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
+          <span className="inline-block bg-gradient-to-r from-redStart to-redEnd bg-clip-text text-transparent">
             Details
           </span>
         </h3>
